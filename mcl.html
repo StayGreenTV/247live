@@ -929,14 +929,14 @@ function render(sym) {
 
   // Levels
   const levels = buildLevels(price, cfg.atr);
-  document.getElementById('levelsPanel').innerHTML = levels.map(l =>
+  document.getElementById('levelsPanel').innerHTML = levels.map(l => {
     const rowCls = l.cls==='lv-res'?'row-res':l.cls==='lv-sup'?'row-sup':l.cls==='lv-poc'?'row-poc':'row-pvt';
     const tagCls = l.cls==='lv-res'?'lv-tag-res':l.cls==='lv-sup'?'lv-tag-sup':l.cls==='lv-poc'?'lv-tag-poc':'lv-tag-pvt';
-    `<div class="level-row ${rowCls}">
+    return `<div class="level-row ${rowCls}">
       <span class="lv-tag ${tagCls}">${l.tag}</span>
       <span class="${l.cls}">${l.val.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec})}</span>
-    </div>`
-  ).join('');
+    </div>`;
+  }).join('');
 
   // Confluence
   const bullConf = bias.score === 'BULLISH';
