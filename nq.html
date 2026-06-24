@@ -184,7 +184,7 @@
   }
   .chart-canvas-wrap {
     position: relative;
-    width: 100%; height: 420px;
+    width: 100%; height: 520px;
   }
 
   /* ── SIDEBAR ── */
@@ -860,6 +860,14 @@ function buildLevels(base, atr) {
   ];
 }
 
+// Returns only the 3 most relevant levels for chart overlay
+function getMagneticLevels(price, levels) {
+  const above = levels.filter(l => l.val > price).sort((a,b) => a.val - b.val)[0];
+  const pivot  = levels.find(l => l.cls === 'lv-pvt');
+  const below  = levels.filter(l => l.val < price).sort((a,b) => b.val - a.val)[0];
+  return [above, pivot, below].filter(Boolean);
+}
+
 // ── BIAS ENGINE ────────────────────────────────────────────────
 function computeBias() {
   const scenarios = [
@@ -1119,11 +1127,11 @@ function render(sym) {
   });
 
   // Store levels for chart plugin
-  window._chartLevels = levels;
+  window._chartLevels = getMagneticLevels(price, levels);
   window._chartPrice  = price;
 
   // Store for level line plugin
-  window._chartLevels = levels;
+  window._chartLevels = getMagneticLevels(price, levels);
   window._chartPrice  = price;
   window._chartATR    = cfg.atr;
   window._chartDec    = cfg.decimals||2;
