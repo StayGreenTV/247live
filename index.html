@@ -3,796 +3,344 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FutureCastTV — Institutional Futures Intelligence</title>
-<meta name="description" content="24/7 live futures intelligence terminal — your binoculars for the market action. NQ, ES, CL, Gold, Silver. Entertainment use only.">
-<meta property="og:title" content="FutureCastTV — Futures Intelligence Terminal">
-<meta property="og:description" content="Live 24/7 futures forecasting. NQ · ES · CL · Gold · Silver · SPCX">
-<meta property="og:type" content="website">
+<title>FutureCastTV — Stream Control</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#060810;--bg2:#0a1628;--bg3:#080f1e;
   --cyan:#00d4ff;--bull:#00ff94;--bear:#ff3b5c;--amber:#ffb800;
-  --text:#c8d8f0;--dim:rgba(200,216,240,0.5);--faint:rgba(200,216,240,0.18);
+  --text:#c8d8f0;--dim:rgba(200,216,240,0.45);--faint:rgba(200,216,240,0.18);
   --border:rgba(0,212,255,0.14);--border-hi:rgba(0,212,255,0.35);
 }
-html,body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:16px;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9999}
+html,body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;font-size:13px}
+.app{max-width:1300px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:14px}
 
-/* ── HERO ── */
-.hero{
-  min-height:100vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:40px 20px;
-  position:relative;overflow:hidden;
-}
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(0,212,255,0.06) 0%,transparent 70%);
-}
-.hero-grid{
-  position:absolute;inset:0;
-  background-image:
-    linear-gradient(rgba(0,212,255,0.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,212,255,0.04) 1px,transparent 1px);
-  background-size:60px 60px;
-}
-.hero-content{position:relative;z-index:1;max-width:800px;}
-.eyebrow{
-  font-size:13px;letter-spacing:0.3em;color:var(--cyan);
-  text-transform:uppercase;margin-bottom:20px;
-  display:inline-flex;align-items:center;gap:10px;
-}
-.eyebrow::before,.eyebrow::after{content:'';width:40px;height:1px;background:var(--cyan);opacity:0.4;}
-.hero-title{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(36px,7vw,80px);
-  font-weight:900;
-  line-height:1.05;
-  letter-spacing:-0.01em;
-  color:#fff;
-  margin-bottom:10px;
-}
-.hero-title span{color:var(--cyan);}
-.hero-sub{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(14px,2.5vw,22px);
-  font-weight:400;
-  color:var(--dim);
-  letter-spacing:0.15em;
-  margin-bottom:40px;
-}
-.live-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:16px;font-weight:700;letter-spacing:0.15em;
-  padding:8px 20px;border-radius:20px;
-  background:rgba(0,255,148,0.08);
-  border:1px solid rgba(0,255,148,0.3);
-  color:var(--bull);margin-bottom:40px;
-}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--bull);animation:blink 1.5s infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:60px;}
-.btn-primary{
-  font-family:'JetBrains Mono',monospace;
-  font-size:15px;font-weight:700;letter-spacing:0.12em;
-  padding:18px 40px;border-radius:4px;cursor:pointer;border:none;
-  background:var(--cyan);color:#060810;
-  transition:all 0.15s;text-decoration:none;display:inline-block;
-}
-.btn-primary:hover{background:#00eeff;transform:translateY(-2px);}
-.btn-outline{
-  font-family:'JetBrains Mono',monospace;
-  font-size:15px;font-weight:500;letter-spacing:0.12em;
-  padding:18px 40px;border-radius:4px;cursor:pointer;
-  background:transparent;color:var(--cyan);
-  border:1px solid var(--border-hi);
-  transition:all 0.15s;text-decoration:none;display:inline-block;
-}
-.btn-outline:hover{background:rgba(0,212,255,0.08);transform:translateY(-2px);}
-.ticker-row{
-  display:flex;gap:36px;justify-content:center;flex-wrap:wrap;
-  font-size:15px;
-}
-.ticker-item{display:flex;flex-direction:column;align-items:center;gap:5px;}
-.t-sym{color:#fff;font-weight:700;font-size:18px;letter-spacing:0.06em;}
-.t-px{color:var(--dim);font-size:16px;}
-.t-chg{font-size:15px;font-weight:600;}
-.t-up{color:var(--bull);}.t-dn{color:var(--bear);}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding-bottom:14px;border-bottom:1px solid var(--border-hi)}
+.logo{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.2em;color:var(--cyan)}
+.logo span{color:var(--bull)}
+.hdr-right{display:flex;align-items:center;gap:14px}
+.clock{font-size:11px;color:var(--dim)}
+.status-pill{display:flex;align-items:center;gap:7px;font-size:11px;padding:5px 16px;border-radius:20px}
+.pill-live{background:rgba(0,255,148,0.1);border:1px solid rgba(0,255,148,0.3);color:var(--bull)}
+.pill-off{background:rgba(200,216,240,0.06);border:1px solid var(--border);color:var(--dim)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--bull);animation:blink 1.5s infinite}
+.off-dot{width:7px;height:7px;border-radius:50%;background:rgba(200,216,240,0.2)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.1}}
 
-/* ── TERMINALS SECTION ── */
-.section{padding:80px 32px;max-width:100%;margin:0 auto;}
-.section-eyebrow{font-size:13px;letter-spacing:0.25em;color:var(--cyan);text-transform:uppercase;margin-bottom:12px;}
-.section-title{font-family:'Orbitron',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:#fff;margin-bottom:8px;}
-.section-sub{font-size:16px;color:var(--dim);margin-bottom:48px;line-height:1.9;}
+.btn-row{display:flex;gap:10px}
+.btn{flex:1;padding:14px;border-radius:6px;border:1px solid var(--border);background:var(--bg2);cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:0.1em;color:var(--text);transition:all 0.15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-go{border-color:rgba(0,255,148,0.4);color:var(--bull)}
+.btn-go:hover{background:rgba(0,255,148,0.08)}
+.btn-stop{border-color:rgba(255,59,92,0.4);color:var(--bear)}
+.btn-stop:hover{background:rgba(255,59,92,0.08)}
+.btn-restart{border-color:rgba(255,184,0,0.4);color:var(--amber)}
+.btn-restart:hover{background:rgba(255,184,0,0.08)}
 
-.terminal-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:20px;}
-.terminal-card{
-  background:var(--bg2);border:1px solid var(--border);border-radius:6px;
-  overflow:hidden;transition:border-color 0.2s,transform 0.2s;
-  text-decoration:none;display:block;
-}
-.terminal-card:hover{border-color:var(--border-hi);transform:translateY(-3px);}
-.terminal-card.locked{opacity:0.7;}
-.tc-preview{
-  height:220px;background:var(--bg3);
-  display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-}
-.tc-preview::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(0deg,transparent,transparent 18px,rgba(0,212,255,0.03) 19px);
-}
-.tc-preview-inner{position:relative;z-index:1;text-align:center;}
-.tc-symbol{font-family:'Orbitron',sans-serif;font-size:42px;font-weight:900;color:#fff;letter-spacing:0.08em;}
-.tc-name{font-size:14px;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase;margin-top:4px;}
-.tc-price{font-size:24px;font-weight:700;color:var(--cyan);margin-top:8px;}
-.tc-body{padding:22px 24px;}
-.tc-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;}
-.tc-desc{font-size:14px;color:var(--dim);line-height:1.8;margin-bottom:16px;}
-.tc-footer{display:flex;align-items:center;justify-content:space-between;}
-.tc-tag{font-size:13px;letter-spacing:0.1em;padding:5px 12px;border-radius:2px;}
-.tag-free{background:rgba(0,255,148,0.1);color:var(--bull);border:1px solid rgba(0,255,148,0.25);}
-.tag-pro{background:rgba(0,212,255,0.08);color:var(--cyan);border:1px solid var(--border-hi);}
-.tag-full{background:rgba(255,184,0,0.08);color:var(--amber);border:1px solid rgba(255,184,0,0.25);}
-.tc-arrow{font-size:24px;color:var(--cyan);}
-.lock-overlay{
-  position:absolute;inset:0;
-  background:rgba(6,8,16,0.6);
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;
-}
+.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.mc{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:12px 14px;position:relative;overflow:hidden}
+.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.mc.c::after{background:var(--cyan)}.mc.g::after{background:var(--bull)}.mc.a::after{background:var(--amber)}
+.mc-lbl{font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase;margin-bottom:6px}
+.mc-val{font-size:18px;font-weight:700;color:#e8f0ff}
+.mc-sub{font-size:9px;color:var(--faint);margin-top:3px}
 
-/* ── PRICING ── */
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
-.price-card{
-  background:var(--bg2);border:1px solid var(--border);border-radius:6px;
-  padding:28px 24px;text-align:center;position:relative;overflow:hidden;
-}
-.price-card.featured{border-color:var(--amber);}
-.price-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--amber);}
-.price-badge{
-  display:inline-block;font-size:11px;letter-spacing:0.15em;
-  padding:3px 10px;border-radius:2px;margin-bottom:16px;
-  background:rgba(255,184,0,0.12);color:var(--amber);
-  border:1px solid rgba(255,184,0,0.3);
-}
-.price-tier{font-size:13px;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase;margin-bottom:10px;}
-.price-amount{font-family:'Orbitron',sans-serif;font-size:42px;font-weight:700;color:#fff;margin-bottom:2px;}
-.price-amount sup{font-size:20px;vertical-align:super;}
-.price-period{font-size:13px;color:var(--dim);margin-bottom:6px;}
-.price-monthly{font-size:14px;color:var(--bull);margin-bottom:24px;}
-.price-features{text-align:left;margin-bottom:24px;}
-.price-feature{
-  display:flex;align-items:center;gap:8px;
-  font-size:13px;color:var(--dim);padding:5px 0;
-  border-bottom:1px solid var(--border);
-}
-.price-feature:last-child{border-bottom:none;}
-.feat-ok{color:var(--bull);}.feat-no{color:var(--faint);}
-.price-btn{
-  width:100%;font-family:'JetBrains Mono',monospace;
-  font-size:11px;font-weight:700;letter-spacing:0.12em;
-  padding:12px;border-radius:4px;cursor:pointer;border:none;
-  transition:all 0.15s;
-}
-.pbtn-free{background:rgba(0,212,255,0.1);color:var(--cyan);border:1px solid var(--border-hi);}
-.pbtn-free:hover{background:rgba(0,212,255,0.18);}
-.pbtn-pro{background:var(--cyan);color:#060810;}
-.pbtn-pro:hover{background:#00eeff;}
-.pbtn-full{background:rgba(255,184,0,0.15);color:var(--amber);border:1px solid rgba(255,184,0,0.3);}
-.pbtn-full:hover{background:rgba(255,184,0,0.25);}
+.body{display:grid;grid-template-columns:1fr 290px;gap:12px}
+.preview-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.preview-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)}
+.preview-lbl{font-size:9px;letter-spacing:0.12em;color:var(--dim);text-transform:uppercase}
+.preview-scene{font-size:11px;color:var(--cyan);font-weight:500}
+.preview-frame{flex:1;min-height:420px;border:none;width:100%;background:var(--bg)}
 
-/* ── RESTREAM SECTION ── */
-.stream-bar{
-  background:var(--bg2);border:1px solid var(--border);border-radius:6px;
-  padding:20px 24px;display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:16px;margin-bottom:16px;
-}
-.stream-bar-left{display:flex;align-items:center;gap:16px;}
-.stream-icon{font-size:28px;}
-.stream-name{font-size:13px;font-weight:700;color:#fff;}
-.stream-desc{font-size:10px;color:var(--dim);margin-top:2px;}
-.dest-pills{display:flex;gap:8px;flex-wrap:wrap;}
-.dest-pill{
-  font-size:9px;letter-spacing:0.1em;padding:3px 10px;border-radius:2px;
-  font-weight:700;
-}
-.dp-yt{background:rgba(226,75,74,0.12);color:#E24B4A;border:1px solid rgba(226,75,74,0.3);}
-.dp-tw{background:rgba(83,74,183,0.12);color:#9147ff;border:1px solid rgba(83,74,183,0.3);}
-.dp-x{background:rgba(200,216,240,0.08);color:var(--dim);border:1px solid var(--border);}
+.sidebar{display:flex;flex-direction:column;gap:10px}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:13px 15px}
+.panel-title{font-size:9px;letter-spacing:0.14em;color:var(--dim);text-transform:uppercase;padding-bottom:9px;margin-bottom:11px;border-bottom:1px solid var(--border)}
 
-/* ── FOOTER ── */
-footer{
-  border-top:1px solid var(--border);
-  padding:30px 20px;text-align:center;
-  font-size:12px;color:var(--faint);letter-spacing:0.08em;
-  line-height:2;
-}
-footer a{color:var(--dim);text-decoration:none;}
-footer a:hover{color:var(--cyan);}
+.scene-list{display:flex;flex-direction:column;gap:5px}
+.scene-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:4px;cursor:pointer;transition:border-color 0.15s}
+.scene-item:hover{border-color:var(--border-hi)}
+.scene-item.active{border-color:var(--cyan);background:rgba(0,212,255,0.05)}
+.scene-name{font-size:10px;font-weight:500;color:var(--text)}
+.scene-desc{font-size:8px;color:var(--dim);margin-top:2px}
+.scene-badge{font-size:8px;padding:2px 7px;border-radius:2px;background:rgba(0,212,255,0.1);color:var(--cyan);font-weight:700}
+.scene-live{background:rgba(0,255,148,0.12);color:var(--bull)}
 
-@media(max-width:600px){
-  .hero-btns{flex-direction:column;align-items:center;}
-  .btn-primary,.btn-outline{width:100%;text-align:center;}
-  .stream-bar{flex-direction:column;}
-}
+.dest-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.dest-row:last-child{border-bottom:none}
+.dest-icon{font-size:15px;width:20px;text-align:center}
+.dest-info{flex:1}
+.dest-name{font-size:10px;font-weight:500;color:var(--text)}
+.dest-key{font-size:8px;color:var(--dim);margin-top:1px}
+.toggle{position:relative;width:34px;height:18px;border:none;border-radius:9px;cursor:pointer;transition:background 0.2s;flex-shrink:0}
+.toggle.on{background:rgba(0,255,148,0.25);border:1px solid rgba(0,255,148,0.4)}
+.toggle.off{background:rgba(200,216,240,0.08);border:1px solid var(--border)}
+.toggle-knob{position:absolute;top:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:left 0.2s}
+.toggle.on .toggle-knob{left:17px}.toggle.off .toggle-knob{left:2px}
 
-  /* ── TOP NAV ── */
-  .top-nav{
-    position:fixed;top:0;left:0;right:0;z-index:1000;
-    background:rgba(6,8,16,0.95);
-    border-bottom:1px solid rgba(0,212,255,0.2);
-    backdrop-filter:blur(10px);
-    display:flex;align-items:center;justify-content:space-between;
-    padding:0 28px;height:52px;
-  }
-  .top-nav-logo{
-    font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;
-    letter-spacing:0.2em;color:#00d4ff;text-decoration:none;
-  }
-  .top-nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
-  .top-nav-link{
-    font-family:'JetBrains Mono',monospace;
-    font-size:10px;letter-spacing:0.1em;
-    color:rgba(200,216,240,0.6);text-decoration:none;
-    padding:6px 12px;border-radius:3px;
-    border:1px solid transparent;
-    transition:all 0.15s;white-space:nowrap;
-  }
-  .top-nav-link:hover{color:#00d4ff;border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.06);}
-  .top-nav-link.active{color:#00d4ff;border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.06);}
-  .top-nav-link.highlight{color:#00ff94;border-color:rgba(0,255,148,0.3);background:rgba(0,255,148,0.06);}
-  .top-nav-link.highlight:hover{background:rgba(0,255,148,0.12);}
-  body{padding-top:52px;}
+.wd-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border);font-size:9px}
+.wd-row:last-child{border-bottom:none}
+.wd-lbl{color:var(--dim)}.wd-val{font-weight:500}
+.ok{color:var(--bull)}.warn{color:var(--amber)}.err{color:var(--bear)}
 
+.log-box{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:4px;padding:10px 12px;height:140px;overflow-y:auto;font-size:9px;line-height:2}
+.log-entry{display:flex;gap:8px}
+.log-ts{color:var(--faint);flex-shrink:0;font-size:8px}
+.log-info{color:var(--dim)}.log-warn{color:var(--amber)}.log-error{color:var(--bear)}.log-ok{color:var(--bull)}
 
-  /* ── SUGGESTION WIDGET ── */
-  .sg-tab {
-    position: fixed;
-    bottom: 200px;
-    right: 0;
-    z-index: 9998;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .sg-pill {
-    background: linear-gradient(90deg, #00c853, #00ff94);
-    color: #060810;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    padding: 8px 14px 8px 16px;
-    border-radius: 6px 0 0 6px;
-    cursor: pointer;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    box-shadow: -3px 0 15px rgba(0,255,148,0.3);
-    transition: all 0.2s;
-    border: none;
-    white-space: nowrap;
-  }
-  .sg-pill:hover {
-    background: linear-gradient(90deg, #00ff94, #00e5ff);
-    box-shadow: -3px 0 25px rgba(0,255,148,0.5);
-    padding-right: 20px;
-  }
-  .sg-card {
-    background: #0a1628;
-    border: 1px solid rgba(0,255,148,0.35);
-    border-right: none;
-    border-radius: 8px 0 0 8px;
-    padding: 20px;
-    width: 280px;
-    box-shadow: -4px 0 30px rgba(0,255,148,0.15);
-    animation: sgSlideIn 0.3s cubic-bezier(0.16,1,0.3,1);
-    margin-bottom: 8px;
-  }
-  @keyframes sgSlideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to   { transform: translateX(0);    opacity: 1; }
-  }
-  .sg-card-title {
-    font-family: 'Orbitron', monospace;
-    font-size: 12px;
-    font-weight: 700;
-    color: #00ff94;
-    letter-spacing: 0.12em;
-    margin-bottom: 6px;
-  }
-  .sg-card-sub {
-    font-size: 10px;
-    color: rgba(200,216,240,0.5);
-    margin-bottom: 14px;
-    line-height: 1.6;
-  }
-  .sg-options {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-  .sg-opt {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 8px;
-    border-radius: 4px;
-    background: rgba(0,255,148,0.04);
-    border: 1px solid rgba(0,255,148,0.12);
-    cursor: pointer;
-    transition: all 0.15s;
-    font-size: 11px;
-    color: rgba(200,216,240,0.7);
-  }
-  .sg-opt:hover {
-    background: rgba(0,255,148,0.1);
-    border-color: rgba(0,255,148,0.3);
-    color: #fff;
-  }
-  .sg-opt input[type=checkbox] {
-    accent-color: #00ff94;
-    width: 13px;
-    height: 13px;
-    flex-shrink: 0;
-  }
-  .sg-btn {
-    width: 100%;
-    padding: 10px;
-    border-radius: 4px;
-    border: none;
-    background: linear-gradient(90deg,#00c853,#00ff94);
-    color: #060810;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.15s;
-    margin-bottom: 8px;
-  }
-  .sg-btn:hover { opacity: 0.85; }
-  .sg-link {
-    display: block;
-    text-align: center;
-    font-size: 10px;
-    color: rgba(0,212,255,0.6);
-    text-decoration: none;
-    letter-spacing: 0.06em;
-  }
-  .sg-link:hover { color: #00d4ff; }
-  .sg-close {
-    position: absolute;
-    top: 10px;
-    right: 14px;
-    background: none;
-    border: none;
-    color: rgba(200,216,240,0.3);
-    font-size: 16px;
-    cursor: pointer;
-    line-height: 1;
-  }
-  .sg-close:hover { color: #fff; }
-  .sg-thanks {
-    text-align: center;
-    padding: 20px 10px;
-  }
-  .sg-thanks-icon { font-size: 32px; margin-bottom: 8px; }
-  .sg-thanks-title {
-    font-family: 'Orbitron', monospace;
-    font-size: 12px;
-    color: #00ff94;
-    margin-bottom: 6px;
-  }
-  .sg-thanks-sub {
-    font-size: 10px;
-    color: rgba(200,216,240,0.5);
-    line-height: 1.6;
-  }
+.footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);font-size:8px;color:rgba(200,216,240,0.2)}
 
+.conn-status{font-size:10px;padding:3px 10px;border-radius:3px;}
+.conn-ok{color:var(--bull);background:rgba(0,255,148,0.08);border:1px solid rgba(0,255,148,0.2)}
+.conn-err{color:var(--bear);background:rgba(255,59,92,0.08);border:1px solid rgba(255,59,92,0.2)}
 </style>
 </head>
 <body>
+<div class="app">
 
-<nav class="top-nav" role="navigation" aria-label="Main navigation">
-  <a href="index.html" class="top-nav-logo">FUTURECASTTV</a>
-  <div class="top-nav-links">
-    <a href="briefing.html" class="top-nav-link highlight">⬡ BRIEFING</a>
-    <a href="nq.html" class="top-nav-link ">NQ/MNQ</a>
-    <a href="es.html" class="top-nav-link ">ES/MES</a>
-    <a href="ym.html" class="top-nav-link ">YM/MYM</a>
-    <a href="mcl.html" class="top-nav-link ">CL/MCL</a>
-    <a href="gc.html" class="top-nav-link ">GOLD</a>
-    <a href="si.html" class="top-nav-link ">SILVER</a>
-    <a href="subscribe.html" class="top-nav-link" style="color:#00ff94;border-color:rgba(0,255,148,0.3);">SUBSCRIBE ✦</a>
-    <a href="index.html" class="top-nav-link active">← HUB</a>
-  </div>
-</nav>
-
-<!-- ── HERO ── -->
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="eyebrow">Futures Intelligence</div>
-    <h1 class="hero-title">FORECAST<span>OS</span></h1>
-    <div class="hero-sub">INSTITUTIONAL-GRADE · 24/7 LIVE · AI-POWERED</div>
-    <div class="live-badge">
-      <span class="live-dot"></span>
-      STREAMING LIVE NOW
+  <div class="hdr">
+    <div class="logo">FUTURECAST<span>TV</span> · Stream Control</div>
+    <div class="hdr-right">
+      <span class="clock" id="clock">--:--:-- CT</span>
+      <span class="conn-status conn-err" id="connStatus">Connecting...</span>
+      <div class="status-pill pill-off" id="statusPill">
+        <span class="off-dot" id="statusDot"></span>
+        <span id="statusTxt">Offline</span>
+      </div>
     </div>
-    <div class="hero-btns">
-      <a href="nq.html" class="btn-primary">LAUNCH NQ TERMINAL →</a>
-      <a href="#terminals" class="btn-outline">VIEW ALL MARKETS</a>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-go" onclick="api('/api/stream/start','POST')">▶ GO LIVE</button>
+    <button class="btn btn-stop" onclick="api('/api/stream/stop','POST')">■ STOP</button>
+    <button class="btn btn-restart" onclick="api('/api/stream/restart','POST')">↺ RESTART</button>
+  </div>
+
+  <div class="metrics">
+    <div class="mc c"><div class="mc-lbl">Uptime</div><div class="mc-val" id="uptime">--:--:--</div><div class="mc-sub">Session</div></div>
+    <div class="mc g"><div class="mc-lbl">Viewers</div><div class="mc-val" id="viewers">0</div><div class="mc-sub">Live now</div></div>
+    <div class="mc g"><div class="mc-lbl">Health</div><div class="mc-val" id="health" style="color:var(--faint)">—</div><div class="mc-sub">Quality</div></div>
+    <div class="mc a"><div class="mc-lbl">Restarts</div><div class="mc-val" id="restarts">0</div><div class="mc-sub">This session</div></div>
+    <div class="mc c"><div class="mc-lbl">Scene</div><div class="mc-val" id="activeScene" style="font-size:10px;padding-top:4px">—</div><div class="mc-sub">Now live</div></div>
+  </div>
+
+  <div class="body">
+    <div class="preview-wrap">
+      <div class="preview-hdr">
+        <span class="preview-lbl">Live Preview</span>
+        <span class="preview-scene" id="previewLabel">Select a scene →</span>
+      </div>
+      <iframe id="previewFrame" class="preview-frame" src="about:blank" title="Scene preview"></iframe>
     </div>
-    <div class="ticker-row" id="tickerRow"></div>
+
+    <div class="sidebar">
+      <div class="panel">
+        <div class="panel-title">Scenes</div>
+        <div class="scene-list" id="sceneList">
+          <div style="color:var(--dim);font-size:10px;padding:8px 0">Loading scenes...</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Destinations</div>
+        <div class="dest-row">
+          <span class="dest-icon" style="color:#E24B4A">▶</span>
+          <div class="dest-info"><div class="dest-name">YouTube</div><div class="dest-key" id="yt-key">Configure in server.js</div></div>
+          <button class="toggle on" id="yt-toggle" onclick="toggleDest('youtube')" aria-label="Toggle YouTube"><span class="toggle-knob"></span></button>
+        </div>
+        <div class="dest-row">
+          <span class="dest-icon" style="color:#9146FF">◈</span>
+          <div class="dest-info"><div class="dest-name">Twitch</div><div class="dest-key" id="tw-key">Configure in server.js</div></div>
+          <button class="toggle off" id="tw-toggle" onclick="toggleDest('twitch')" aria-label="Toggle Twitch"><span class="toggle-knob"></span></button>
+        </div>
+        <div class="dest-row">
+          <span class="dest-icon" style="color:#fff">✕</span>
+          <div class="dest-info"><div class="dest-name">X / Twitter</div><div class="dest-key" id="x-key">Configure in server.js</div></div>
+          <button class="toggle off" id="x-toggle" onclick="toggleDest('x')" aria-label="Toggle X"><span class="toggle-knob"></span></button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Watchdog</div>
+        <div class="wd-row"><span class="wd-lbl">Status</span><span class="wd-val ok">Armed</span></div>
+        <div class="wd-row"><span class="wd-lbl">Check interval</span><span class="wd-val">60 sec</span></div>
+        <div class="wd-row"><span class="wd-lbl">Last check</span><span class="wd-val" id="lastCheck">—</span></div>
+        <div class="wd-row"><span class="wd-lbl">Restarts</span><span class="wd-val" id="wdRestarts">0</span></div>
+        <div class="wd-row"><span class="wd-lbl">Recovery</span><span class="wd-val ok">Auto ~90s</span></div>
+      </div>
+    </div>
   </div>
-</section>
 
-<!-- ── TERMINALS ── -->
-<div class="section" id="terminals">
-  <div class="section-eyebrow">Live Terminals</div>
-  <h2 class="section-title">Pick Your Market</h2>
-  <p class="section-sub">Each terminal delivers a probability forecast cone, key institutional levels,<br>multi-timeframe bias, and live confluence analysis — updated in real time.</p>
-
-  <div class="terminal-grid">
-    <a href="nq.html" class="terminal-card">
-      <div class="tc-preview" style="background:linear-gradient(135deg,#080f1e,#0a1a2e)">
-        <div class="tc-preview-inner">
-          <div class="tc-symbol">NQ</div>
-          <div class="tc-name">Nasdaq 100 Futures</div>
-          <div class="tc-price" id="nq-px">21,840.00</div>
-        </div>
-      </div>
-      <div class="tc-body">
-        <div class="tc-title">NQ / MNQ Terminal</div>
-        <div class="tc-desc">Nasdaq 100 E-Mini · Forecast cone · 8 key levels · 6-timeframe bias · Confluence engine</div>
-        <div class="tc-footer">
-          <span class="tc-tag tag-free">FREE</span>
-          <span class="tc-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="es.html" class="terminal-card">
-      <div class="tc-preview" style="background:linear-gradient(135deg,#080f1e,#0d1a2a)">
-        <div class="tc-preview-inner">
-          <div class="tc-symbol">ES</div>
-          <div class="tc-name">S&amp;P 500 E-Mini</div>
-          <div class="tc-price" id="es-px">5,920.25</div>
-        </div>
-      </div>
-      <div class="tc-body">
-        <div class="tc-title">ES / MES Terminal</div>
-        <div class="tc-desc">S&P 500 E-Mini · RTH + OVN levels · Institutional bias · VWAP analysis</div>
-        <div class="tc-footer">
-          <span class="tc-tag tag-pro">PRO</span>
-          <span class="tc-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="mcl.html" class="terminal-card">
-      <div class="tc-preview" style="background:linear-gradient(135deg,#0a100a,#0f1a0f)">
-        <div class="tc-preview-inner">
-          <div class="tc-symbol">CL</div>
-          <div class="tc-name">Crude Oil Futures</div>
-          <div class="tc-price" id="mcl-px">75.42</div>
-        </div>
-      </div>
-      <div class="tc-body">
-        <div class="tc-title">CL / MCL Terminal</div>
-        <div class="tc-desc">CL / MCL Crude Oil · EIA inventory signals · Supply zone analysis · OVN bias</div>
-        <div class="tc-footer">
-          <span class="tc-tag tag-pro">PRO</span>
-          <span class="tc-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="gc.html" class="terminal-card">
-      <div class="tc-preview" style="background:linear-gradient(135deg,#0f0e08,#1a1608)">
-        <div class="tc-preview-inner">
-          <div class="tc-symbol" style="color:#ffb800">GC</div>
-          <div class="tc-name">Gold Futures</div>
-          <div class="tc-price" id="gc-px" style="color:#ffb800">4,157.00</div>
-        </div>
-      </div>
-      <div class="tc-body">
-        <div class="tc-title">GC / MGC Terminal</div>
-        <div class="tc-desc">Gold Futures · DXY correlation · Safe-haven flow analysis · Fed sensitivity</div>
-        <div class="tc-footer">
-          <span class="tc-tag tag-full">FULL ACCESS</span>
-          <span class="tc-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="si.html" class="terminal-card">
-      <div class="tc-preview" style="background:linear-gradient(135deg,#0c0e10,#121518)">
-        <div class="tc-preview-inner">
-          <div class="tc-symbol" style="color:#c0c8d4">SI</div>
-          <div class="tc-name">Silver Futures</div>
-          <div class="tc-price" id="si-px" style="color:#c0c8d4">32.84</div>
-        </div>
-      </div>
-      <div class="tc-body">
-        <div class="tc-title">SI / SIL Terminal</div>
-        <div class="tc-desc">Silver Futures · Industrial + monetary demand · High-beta metals play</div>
-        <div class="tc-footer">
-          <span class="tc-tag tag-full">FULL ACCESS</span>
-          <span class="tc-arrow">→</span>
-        </div>
-      </div>
-    </a>
-
-    <a href="briefing.html" class="terminal-card">
-      <div class="tc-preview" style="background:linear-gradient(135deg,#08100e,#0a1a14)">
-        <div class="tc-preview-inner">
-          <div class="tc-symbol" style="color:#a855f7;font-size:22px;">⬡ BRIEFING</div>
-          <div class="tc-name">AI Morning Briefing</div>
-          <div class="tc-price" style="color:#a855f7;font-size:14px;">Auto-updates every 30min</div>
-        </div>
-      </div>
-      <div class="tc-body">
-        <div class="tc-title">Morning Briefing Terminal</div>
-        <div class="tc-desc">AI-generated pre-market + NY Open analysis · Session bias · Economic events · Schedule</div>
-        <div class="tc-footer">
-          <span class="tc-tag tag-free">FREE</span>
-          <span class="tc-arrow">→</span>
-        </div>
-      </div>
-    </a>
+  <div class="panel">
+    <div class="panel-title">Activity Log</div>
+    <div class="log-box" id="logBox">
+      <div class="log-entry"><span class="log-ts">--:--:--</span><span class="log-info">Connecting to server at 137.220.56.135:3000...</span></div>
+    </div>
   </div>
+
+  <div class="footer">
+    <span>FUTURECASTTV · Stream Control v1.0 · For Entertainment Use Only · Not Financial Advice</span>
+    <span id="platform">—</span>
+  </div>
+
 </div>
-
-<!-- ── PRICING ── -->
-<div class="section" id="pricing" style="padding-top:0">
-  <div class="section-eyebrow">Subscription Plans</div>
-  <h2 class="section-title">Start Free. Scale Up.</h2>
-  <p class="section-sub">7-day free trial on all paid plans. Billed annually — cancel anytime.</p>
-
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Starter</div>
-      <div class="price-amount"><sup>$</sup>12</div>
-      <div class="price-period">per year</div>
-      <div class="price-monthly" style="color:var(--dim)">= $1 / month</div>
-      <div class="price-features">
-        <div class="price-feature"><span class="feat-ok">✓</span> 1 symbol (NQ or ES)</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Forecast cone</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Key levels</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Daily bias</div>
-        <div class="price-feature"><span class="feat-no">✗</span> Multi-symbol access</div>
-        <div class="price-feature"><span class="feat-no">✗</span> Swing outlook</div>
-      </div>
-      <button class="price-btn pbtn-free" onclick="window.open('https://gumroad.com','_blank')">START FREE TRIAL</button>
-    </div>
-
-    <div class="price-card featured">
-      <div class="price-badge">MOST POPULAR</div>
-      <div class="price-tier">Pro</div>
-      <div class="price-amount"><sup>$</sup>24</div>
-      <div class="price-period">per year</div>
-      <div class="price-monthly">= $2 / month</div>
-      <div class="price-features">
-        <div class="price-feature"><span class="feat-ok">✓</span> NQ + ES terminals</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> All timeframes</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Confluence engine</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Swing outlook</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Morning briefing</div>
-        <div class="price-feature"><span class="feat-no">✗</span> Metals + crude</div>
-      </div>
-      <button class="price-btn pbtn-pro" onclick="window.open('https://gumroad.com','_blank')">START FREE TRIAL →</button>
-    </div>
-
-    <div class="price-card">
-      <div class="price-tier">Full Access</div>
-      <div class="price-amount"><sup>$</sup>48</div>
-      <div class="price-period">per year</div>
-      <div class="price-monthly">= $4 / month</div>
-      <div class="price-features">
-        <div class="price-feature"><span class="feat-ok">✓</span> All 5 symbols</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> NQ · ES · CL · GC · SI</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Live data feed</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Overnight mode</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Full board view</div>
-        <div class="price-feature"><span class="feat-ok">✓</span> Priority updates</div>
-      </div>
-      <button class="price-btn pbtn-full" onclick="window.open('https://gumroad.com','_blank')">START FREE TRIAL</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── LIVE STREAM ── -->
-<div class="section" style="padding-top:0" id="stream">
-  <div class="section-eyebrow">Live Broadcast</div>
-  <h2 class="section-title">Watch Live 24/7</h2>
-  <p class="section-sub">The full terminal streams live around the clock. Follow on your platform of choice.</p>
-
-  <div class="stream-bar">
-    <div class="stream-bar-left">
-      <span class="stream-icon">▶</span>
-      <div>
-        <div class="stream-name">YouTube — FutureCastTV Live</div>
-        <div class="stream-desc">24/7 NQ futures terminal · Market open highlights · Overnight levels</div>
-      </div>
-    </div>
-    <div class="dest-pills">
-      <span class="dest-pill dp-yt">YOUTUBE</span>
-      <a href="https://youtube.com" target="_blank" class="btn-outline" style="padding:8px 18px;font-size:10px;">FOLLOW →</a>
-    </div>
-  </div>
-
-  <div class="stream-bar">
-    <div class="stream-bar-left">
-      <span class="stream-icon">◈</span>
-      <div>
-        <div class="stream-name">Twitch — ForecastOS</div>
-        <div class="stream-desc">Live terminal + market commentary during RTH</div>
-      </div>
-    </div>
-    <div class="dest-pills">
-      <span class="dest-pill dp-tw">TWITCH</span>
-      <a href="https://twitch.tv" target="_blank" class="btn-outline" style="padding:8px 18px;font-size:10px;">FOLLOW →</a>
-    </div>
-  </div>
-</div>
-
-<!-- ── FOOTER ── -->
-<footer>
-  <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:rgba(0,212,255,0.6);letter-spacing:0.2em;margin-bottom:12px">FUTURECASTTV</div>
-  <div>
-    <a href="briefing.html">Briefing</a> · 
-    <a href="nq.html">NQ</a> · 
-    <a href="es.html">ES</a> · 
-    <a href="ym.html">YM</a> · 
-    <a href="mcl.html">CL/MCL</a> · 
-    <a href="gc.html">Gold</a> · 
-    <a href="si.html">Silver</a> · 
-    <a href="subscribe.html" style="color:#00ff94;">Subscribe ✦</a>
-  </div>
-  <div style="margin-top:12px">
-    © 2026 Texas Wedge Ventures · FutureCastTV · 
-    <a href="#pricing">Subscribe</a> · 
-    <a href="#stream">Watch Live</a>
-  </div>
-  <div style="margin-top:12px;font-size:8px;opacity:0.5">
-    FOR ENTERTAINMENT &amp; EDUCATIONAL USE ONLY · NOT FINANCIAL ADVICE · FUTURES TRADING INVOLVES SUBSTANTIAL RISK · © 2026 TEXAS WEDGE VENTURES
-  </div>
-</footer>
-
 <script>
-// Animate ticker prices
-const prices = {
-  nq:  { base: 21840,  dec: 2 },
-  es:  { base: 5920,   dec: 2 },
-  mcl: { base: 75.40,  dec: 2 },
-  gc:  { base: 4157,   dec: 2 },
-  si:  { base: 32.80,  dec: 3 },
-};
+const VPS_IP = '137.220.56.135';
+const VPS_PORT = 3000;
+let ws, scenes = [], destState = {youtube:true, twitch:false, x:false};
 
-const tickerData = [
-  { sym:'NQ',   base:21840,  dec:2 },
-  { sym:'ES',   base:5920,   dec:2 },
-  { sym:'SPCX', base:165.00, dec:2 },
-  { sym:'MCL',  base:75.40,  dec:2 },
-  { sym:'GC',   base:4157,   dec:2 },
-  { sym:'SI',   base:32.80,  dec:3 },
-  { sym:'RTY',  base:2210,   dec:2 },
-  { sym:'YM',   base:43800,  dec:2 },
-];
-
-function randomPrice(base, atr) {
-  return base + (Math.random() - 0.47) * (base * 0.004);
+function connect() {
+  try {
+    ws = new WebSocket('ws://' + VPS_IP + ':' + VPS_PORT);
+    ws.onopen = function() {
+      addLog('Connected to FCTV server', 'ok');
+      document.getElementById('connStatus').textContent = 'Connected';
+      document.getElementById('connStatus').className = 'conn-status conn-ok';
+    };
+    ws.onmessage = function(e) {
+      var m = JSON.parse(e.data);
+      if (m.type === 'state')       updateState(m.state);
+      if (m.type === 'scenes')      renderScenes(m.scenes);
+      if (m.type === 'log')         handleLog(m);
+      if (m.type === 'scene_change') setPreview(m.sceneId);
+    };
+    ws.onclose = function() {
+      addLog('Connection lost — reconnecting in 3s...', 'warn');
+      document.getElementById('connStatus').textContent = 'Reconnecting...';
+      document.getElementById('connStatus').className = 'conn-status conn-err';
+      setTimeout(connect, 3000);
+    };
+    ws.onerror = function() {
+      addLog('WebSocket error — check VPS is running: node server.js', 'error');
+    };
+  } catch(e) {
+    addLog('Connection failed: ' + e.message, 'error');
+    setTimeout(connect, 3000);
+  }
 }
 
-function buildTicker() {
-  const row = document.getElementById('tickerRow');
-  row.innerHTML = tickerData.map(t => {
-    const px = randomPrice(t.base);
-    const chg = (Math.random() - 0.46) * 1.4;
-    const up = chg >= 0;
-    return `<div class="ticker-item">
-      <span class="t-sym">${t.sym}</span>
-      <span class="t-px">${px.toFixed(t.dec)}</span>
-      <span class="t-chg ${up?'t-up':'t-dn'}">${up?'▲':'▼'}${Math.abs(chg).toFixed(2)}%</span>
-    </div>`;
+async function api(url, method, body) {
+  try {
+    var r = await fetch('http://' + VPS_IP + ':' + VPS_PORT + url, {
+      method: method || 'GET',
+      headers: {'Content-Type':'application/json'},
+      body: body ? JSON.stringify(body) : null
+    });
+    return await r.json();
+  } catch(e) {
+    addLog('API error: ' + e.message, 'error');
+  }
+}
+
+function updateState(s) {
+  if (!s) return;
+  var pill = document.getElementById('statusPill');
+  var dot  = document.getElementById('statusDot');
+  var txt  = document.getElementById('statusTxt');
+  if (s.isLive) {
+    pill.className = 'status-pill pill-live';
+    dot.className  = 'live-dot';
+    txt.textContent = 'LIVE';
+  } else {
+    pill.className = 'status-pill pill-off';
+    dot.className  = 'off-dot';
+    txt.textContent = 'Offline';
+  }
+  document.getElementById('viewers').textContent  = s.viewers  || 0;
+  document.getElementById('restarts').textContent = s.restartCount || 0;
+  document.getElementById('wdRestarts').textContent = s.restartCount || 0;
+  var h = document.getElementById('health');
+  h.textContent  = s.health || '—';
+  h.style.color  = s.health === 'excellent' ? 'var(--bull)' : s.health === 'starting' ? 'var(--amber)' : 'var(--faint)';
+  if (s.lastCheck) document.getElementById('lastCheck').textContent = new Date(s.lastCheck).toLocaleTimeString();
+  if (s.uptime && s.uptime > 0) {
+    var h2 = String(Math.floor(s.uptime/3600)).padStart(2,'0');
+    var m2 = String(Math.floor((s.uptime%3600)/60)).padStart(2,'0');
+    var sc = String(s.uptime%60).padStart(2,'0');
+    document.getElementById('uptime').textContent = h2+':'+m2+':'+sc;
+  }
+  if (s.activeScene) {
+    var sc2 = scenes.find(function(x){return x.id===s.activeScene;});
+    document.getElementById('activeScene').textContent = sc2 ? sc2.name : s.activeScene;
+    renderSceneActive(s.activeScene);
+  }
+  if (s.platform) document.getElementById('platform').textContent = s.platform;
+}
+
+function renderScenes(data) {
+  scenes = data || [];
+  document.getElementById('sceneList').innerHTML = scenes.map(function(s) {
+    return '<div class="scene-item" id="scene-'+s.id+'" onclick="switchScene(\''+s.id+'\')">' +
+      '<div><div class="scene-name">'+s.name+'</div><div class="scene-desc">'+s.desc+'</div></div>' +
+      '<span class="scene-badge" id="badge-'+s.id+'">GO</span>' +
+    '</div>';
   }).join('');
 }
 
-// Update card prices
-function updateCardPrices() {
-  Object.entries(prices).forEach(([sym, cfg]) => {
-    const el = document.getElementById(`${sym}-px`);
-    if (el) {
-      const px = randomPrice(cfg.base);
-      el.textContent = px.toLocaleString('en-US', { minimumFractionDigits: cfg.dec, maximumFractionDigits: cfg.dec });
-    }
-  });
+function renderSceneActive(id) {
+  document.querySelectorAll('.scene-item').forEach(function(el){el.classList.remove('active');});
+  document.querySelectorAll('.scene-badge').forEach(function(el){el.className='scene-badge';el.textContent='GO';});
+  var item  = document.getElementById('scene-'+id);
+  var badge = document.getElementById('badge-'+id);
+  if (item)  item.classList.add('active');
+  if (badge) { badge.className='scene-badge scene-live'; badge.textContent='LIVE'; }
 }
 
-buildTicker();
-updateCardPrices();
-setInterval(() => { buildTicker(); updateCardPrices(); }, 8000);
+function switchScene(id) {
+  api('/api/scene/'+id, 'POST');
+  setPreview(id);
+}
 
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
-  });
+function setPreview(id) {
+  var sc = scenes.find(function(s){return s.id===id;});
+  if (!sc) return;
+  document.getElementById('previewFrame').src = 'http://'+VPS_IP+':'+VPS_PORT+'/terminals/'+sc.file;
+  document.getElementById('previewLabel').textContent = sc.name;
+}
+
+function toggleDest(key) {
+  destState[key] = !destState[key];
+  api('/api/destination', 'POST', {key:key, enabled:destState[key]});
+  var map = {youtube:'yt', twitch:'tw', x:'x'};
+  var t = document.getElementById(map[key]+'-toggle');
+  if (t) t.className = 'toggle ' + (destState[key] ? 'on' : 'off');
+}
+
+function handleLog(m) {
+  if (m.entry)   addLog(m.entry.msg,   m.entry.level);
+  if (m.entries) m.entries.slice().reverse().forEach(function(en){addLog(en.msg, en.level);});
+}
+
+function addLog(msg, level) {
+  var box = document.getElementById('logBox');
+  var el  = document.createElement('div');
+  el.className = 'log-entry';
+  var cls = level==='error'?'log-error':level==='warn'?'log-warn':level==='ok'?'log-ok':'log-info';
+  el.innerHTML = '<span class="log-ts">'+new Date().toLocaleTimeString()+'</span><span class="'+cls+'">'+msg+'</span>';
+  box.insertBefore(el, box.firstChild);
+  while (box.children.length > 80) box.removeChild(box.lastChild);
+}
+
+function tickClock() {
+  document.getElementById('clock').textContent =
+    new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'})+' CT';
+}
+
+setInterval(tickClock, 1000);
+tickClock();
+
+setInterval(function() {
+  api('/api/state').then(function(d){ if(d) updateState(d); });
+}, 5000);
+
+api('/api/state').then(function(d) {
+  if (!d) return;
+  updateState(d);
+  if (d.scenes)      renderScenes(d.scenes);
+  if (d.activeScene) setPreview(d.activeScene);
 });
-</script>
 
-<!-- SUGGESTION WIDGET -->
-<div class="sg-tab" id="sgTab">
-  <!-- Card (hidden by default) -->
-  <div class="sg-card" id="sgCard" style="display:none;position:relative;">
-    <button class="sg-close" onclick="sgClose()" aria-label="Close">&#x2715;</button>
-    <div id="sgForm">
-      <div class="sg-card-title">&#128161; WHAT DO YOU WANT NEXT?</div>
-      <div class="sg-card-sub">Vote for the next FutureCastTV feature. We build what YOU want.</div>
-      <div class="sg-options">
-        <label class="sg-opt"><input type="checkbox" value="YM / Dow Terminal"> YM / Dow Terminal</label>
-        <label class="sg-opt"><input type="checkbox" value="RTY / Russell Terminal"> RTY / Russell Terminal</label>
-        <label class="sg-opt"><input type="checkbox" value="Bitcoin / Crypto"> Bitcoin / Crypto</label>
-        <label class="sg-opt"><input type="checkbox" value="Options Flow / GEX"> Options Flow / GEX</label>
-        <label class="sg-opt"><input type="checkbox" value="20/200 MA Signal"> 20/200 MA Signal</label>
-        <label class="sg-opt"><input type="checkbox" value="Live Bot P&L Stream"> Live Bot P&#38;L Stream</label>
-        <label class="sg-opt"><input type="checkbox" value="Mobile App"> Mobile App</label>
-      </div>
-      <button class="sg-btn" onclick="sgVote()">CAST MY VOTE &#8594;</button>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScIlC3yPh17Q5KChUSF1JuinuBSDTPUP3Rf-mJVjlS-evVfPw/viewform" target="_blank" class="sg-link">&#128203; Something else? Tell us &#8599;</a>
-    </div>
-    <div id="sgThanks" class="sg-thanks" style="display:none;">
-      <div class="sg-thanks-icon">&#127808;</div>
-      <div class="sg-thanks-title">VOTE RECEIVED!</div>
-      <div class="sg-thanks-sub">
-        We build what traders want.<br>
-        Stay tuned &#8212; Stay Green. &#127808;
-      </div>
-    </div>
-  </div>
-  <!-- Pull tab -->
-  <button class="sg-pill" id="sgPill" onclick="sgToggle()" aria-label="Suggest a feature">
-    &#128161; SUGGEST A FEATURE
-  </button>
-</div>
-
-<script>
-
-var _sgOpen = false;
-function sgToggle() {
-  _sgOpen = !_sgOpen;
-  document.getElementById('sgCard').style.display = _sgOpen ? 'block' : 'none';
-  document.getElementById('sgPill').style.display = _sgOpen ? 'none' : 'flex';
-}
-function sgClose() {
-  _sgOpen = false;
-  document.getElementById('sgCard').style.display = 'none';
-  document.getElementById('sgPill').style.display = 'flex';
-  // Reset form
-  document.getElementById('sgForm').style.display = 'block';
-  document.getElementById('sgThanks').style.display = 'none';
-  document.querySelectorAll('.sg-opt input').forEach(function(cb){ cb.checked=false; });
-}
-function sgVote() {
-  var checked = [];
-  document.querySelectorAll('.sg-opt input:checked').forEach(function(cb){ checked.push(cb.value); });
-  // Open Google Form with selections noted
-  var url = 'https://docs.google.com/forms/d/e/1FAIpQLScIlC3yPh17Q5KChUSF1JuinuBSDTPUP3Rf-mJVjlS-evVfPw/viewform';
-  window.open(url, '_blank');
-  // Show thank you
-  document.getElementById('sgForm').style.display = 'none';
-  document.getElementById('sgThanks').style.display = 'block';
-  // Auto close after 4 seconds
-  setTimeout(sgClose, 4000);
-}
-
+connect();
 </script>
 </body>
 </html>
