@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUTURECASTTV — CL/MCL Terminal</title>
+<title>FutureCastTV — YM/MYM Dow Terminal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -592,8 +592,8 @@
   <div class="top-nav-links">
     <a href="briefing.html" class="top-nav-link highlight">⬡ BRIEFING</a>
     <a href="nq.html" class="top-nav-link ">NQ/MNQ</a>
-    <a href="es.html" class="top-nav-link ">ES/MES</a>
-    <a href="mcl.html" class="top-nav-link active">MCL</a>
+    <a href="es.html" class="top-nav-link active">YM/MYM</a>
+    <a href="mcl.html" class="top-nav-link ">MCL</a>
     <a href="gc.html" class="top-nav-link ">GOLD</a>
     <a href="si.html" class="top-nav-link ">SILVER</a>
     <a href="index.html" class="top-nav-link ">← HUB</a>
@@ -670,15 +670,15 @@
     <div class="hdr-left">
       <div class="logo">FutureCast<span>TV</span></div>
       <div class="vsep"></div>
-      <span class="ticker-lbl" id="tickerLbl">CL / MCL</span>
+      <span class="ticker-lbl" id="tickerLbl">YM / MYM</span>
       <span class="price-display" id="priceDisplay">—</span>
       <span class="chg-badge chg-up" id="chgBadge">+0.00%</span>
     </div>
     <div class="hdr-right">
       <select class="symbol-selector" id="symbolSel" onchange="switchSymbol(this.value)">
-        <option value="MCL">CL / MCL — Crude Oil</option>
+        <option value="ES">YM / MYM — Dow Jones 30</option>
         <option value="NQ">NQ / MNQ — Nasdaq 100 ⬤ Pro</option>
-        <option value="ES">ES / MES — S&amp;P 500 ⬤ Pro</option>
+        <option value="MCL">MCL — Micro Crude Oil ⬤ Pro</option>
         <option value="GC">GC — Gold Futures ⬤ Full</option>
         <option value="SI">SI — Silver Futures ⬤ Full</option>
       </select>
@@ -736,8 +736,8 @@
       <div class="chart-canvas-wrap">
         <canvas id="forecastChart"
           role="img"
-          aria-label="CL/MCL crude oil futures probability forecast cone showing bull, base case, and bear price zones projecting from current price across intraday and 4-day swing horizon">
-          MCL futures forecast: base case, bull zone, and bear zone projections across session and swing timeframes.
+          aria-label="YM futures probability forecast cone showing bull, base case, and bear price zones projecting from current price across intraday and 4-day swing horizon">
+          YM/MYM futures forecast: base case, bull zone, and bear zone projections across session and swing timeframes.
         </canvas>
       </div>
     </div>
@@ -814,7 +814,7 @@
   <!-- BOTTOM BAR -->
   <div class="bottom-bar">
     <span class="disclaimer" id="disclaimer">
-      FUTURECASTTV v1.2 · FUTURECASTTV · @FutureCastLive · Focus Faster. Trade Smarter. Stay Green. 🟢 · NOT FINANCIAL ADVICE
+      FUTURECASTTV v1.1 · SIMULATED DATA — LIVE FEED COMING SOON · FUTURECASTTV · @FutureCastLive · Focus Faster. Trade Smarter. Stay Green. 🟢 · NOT FINANCIAL ADVICE
     </span>
     <div class="btn-group">
       <button class="btn btn-outline" onclick="refreshData()">↺ REFRESH</button>
@@ -827,21 +827,21 @@
 <script>
 // ── SYMBOL CONFIG ──────────────────────────────────────────────
 const SYMBOLS = {
-  MCL: { label:'CL / MCL',  name:'Crude Oil Futures', base:75.40, atr:1.85, tickSize:0.01, decimals:2 },
-  ES:  { label:'ES / MES', name:'S&P 500 E-Mini Futures',  base:5920,  atr:68,   tickSize:0.25 },
-  NQ:  { label:'NQ / MNQ', name:'Nasdaq 100 Futures',      base:21840, atr:310,  tickSize:0.25 },
-  GC:  { label:'GC',       name:'Gold Futures',             base:4157,  atr:55,   tickSize:0.1  },
-  SI:  { label:'SI',       name:'Silver Futures',           base:32.80, atr:0.95, tickSize:0.005, decimals:3 },
+  ES:  { label:'YM / MYM', name:'Dow Jones E-Mini Futures', base:43820,  atr:185,   tickSize:0.25 },
+  NQ:  { label:'NQ / MNQ', name:'Nasdaq 100 Futures',     base:21840, atr:310,  tickSize:0.25 },
+  MCL: { label:'MCL',      name:'Micro Crude Oil',         base:75.40, atr:1.85, tickSize:0.01, decimals:2 },
+  GC:  { label:'GC',       name:'Gold Futures',            base:4157,  atr:55,   tickSize:0.1  },
+  SI:  { label:'SI',       name:'Silver Futures',          base:32.80, atr:0.95, tickSize:0.005, decimals:3 },
 };
 
-const LOCKED = ['NQ','ES','GC','SI'];
-let currentSymbol = 'MCL';
+const LOCKED = ['NQ','ES','MCL','GC','SI'];
+let currentSymbol = 'YM';
 let chartInstance = null;
-let priceNow = SYMBOLS.MCL.base;
+let priceNow = SYMBOLS.YM.base;
 
 // ── TAPE DATA ──────────────────────────────────────────────────
 const tapeSymbols = [
-  {sym:'NQ', base:21840}, {sym:'ES', base:5920},
+  {sym:'NQ', base:21840}, {sym:'ES', base:43820},
   {sym:'MCL', base:75.40, dec:2}, {sym:'GC', base:4157},
   {sym:'SI', base:32.80, dec:3}, {sym:'RTY', base:2210},
   {sym:'YM', base:43800},
@@ -1092,8 +1092,8 @@ function render(sym) {
     { txt: (bullConf?'20MA > 50MA (bull cross)':'50MA > 20MA (bear cross)'), bull: bullConf },
     { txt: 'RSI 14: ' + Math.round(50 + (Math.random()-0.4)*30) + (bullConf?' — trending':'  — watch OB'), bull: bullConf },
     { txt: 'Volume ' + (volOver?'> avg +'+volPct+'% (inst. activity)':'at avg (neutral)'), bull: volOver },
-    { txt: 'EIA inventory: builds = bearish pressure', bull: false },
-    { txt: 'Iran deal signed → supply risk easing', bull: false },
+    { txt: 'Macro: Risk-on: Dow blue chips leading', bull: true },
+    { txt: 'Fed policy: rate sensitive Dow watching', bull: false },
   ];
   document.getElementById('confPanel').innerHTML = items.map(i =>
     `<div class="conf-line ${i.bull?'conf-bull':'conf-bear'}">${i.bull?'▲':'▼'} ${i.txt}</div>`
@@ -1101,9 +1101,9 @@ function render(sym) {
 
   // TF Cards
   const tfCards = [
-    { sig: bias.score,   cls: bias.score==='BULLISH'?'sig-bull':bias.score==='BEARISH'?'sig-bear':'sig-neu', detail: 'Pre-mkt crude ' + (isUp?'bid up':'offered down') },
-    { sig: isUp?'LONG BIAS':'SHORT BIAS', cls: isUp?'sig-bull':'sig-bear', detail: isUp?'Supply zone test':'Demand zone bounce' },
-    { sig: bias.score==='BEARISH'?'NEUTRAL':'BULLISH', cls: bias.score==='BEARISH'?'sig-neu':'sig-bull', detail: 'Fed event risk present' },
+    { sig: bias.score,   cls: bias.score==='BULLISH'?'sig-bull':bias.score==='BEARISH'?'sig-bear':'sig-neu', detail: 'RTH open ' + (isUp?'gap up':'gap down') },
+    { sig: isUp?'LONG BIAS':'SHORT BIAS', cls: isUp?'sig-bull':'sig-bear', detail: isUp?'Blue chip momentum':'Dow reversal play' },
+    { sig: bias.score==='BEARISH'?'NEUTRAL':'BULLISH', cls: bias.score==='BEARISH'?'sig-neu':'sig-bull', detail: 'Dow rate sensitive watch' },
     { sig: bullConf?'BULLISH':'BEARISH', cls: bullConf?'sig-bull':'sig-bear', detail: bullConf?'Price > all MAs':'Price < 20MA' },
     { sig: 'CAUTION', cls: 'sig-neu', detail: 'RSI approaching OB zone' },
     { sig: 'MIXED',   cls: 'sig-neu', detail: 'Iran deal vs Fed hike' },
@@ -1158,7 +1158,7 @@ function tickClock() {
 
 // ── INIT ───────────────────────────────────────────────────────
 buildTape();
-render('MCL');
+render('YM');
 setInterval(tickClock, 1000);
 setInterval(() => {
   buildTape();

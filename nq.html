@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FORECAST OS — NQ/MNQ Terminal</title>
+<title>FUTURECASTTV — NQ/MNQ Terminal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -536,12 +536,159 @@
   .top-nav-link.active{color:#00d4ff;border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.06);}
   .top-nav-link.highlight{color:#00ff94;border-color:rgba(0,255,148,0.3);background:rgba(0,255,148,0.06);}
 
+
+  /* ── SUGGESTION WIDGET ── */
+  .sg-tab {
+    position: fixed;
+    bottom: 120px;
+    right: 0;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .sg-pill {
+    background: linear-gradient(90deg, #00c853, #00ff94);
+    color: #060810;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 8px 14px 8px 16px;
+    border-radius: 6px 0 0 6px;
+    cursor: pointer;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    box-shadow: -3px 0 15px rgba(0,255,148,0.3);
+    transition: all 0.2s;
+    border: none;
+    white-space: nowrap;
+  }
+  .sg-pill:hover {
+    background: linear-gradient(90deg, #00ff94, #00e5ff);
+    box-shadow: -3px 0 25px rgba(0,255,148,0.5);
+    padding-right: 20px;
+  }
+  .sg-card {
+    background: #0a1628;
+    border: 1px solid rgba(0,255,148,0.35);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: -4px 0 30px rgba(0,255,148,0.15);
+    animation: sgSlideIn 0.3s cubic-bezier(0.16,1,0.3,1);
+    margin-bottom: 8px;
+  }
+  @keyframes sgSlideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+  }
+  .sg-card-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #00ff94;
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .sg-card-sub {
+    font-size: 10px;
+    color: rgba(200,216,240,0.5);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .sg-options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .sg-opt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: rgba(0,255,148,0.04);
+    border: 1px solid rgba(0,255,148,0.12);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 11px;
+    color: rgba(200,216,240,0.7);
+  }
+  .sg-opt:hover {
+    background: rgba(0,255,148,0.1);
+    border-color: rgba(0,255,148,0.3);
+    color: #fff;
+  }
+  .sg-opt input[type=checkbox] {
+    accent-color: #00ff94;
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+  }
+  .sg-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: none;
+    background: linear-gradient(90deg,#00c853,#00ff94);
+    color: #060810;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 8px;
+  }
+  .sg-btn:hover { opacity: 0.85; }
+  .sg-link {
+    display: block;
+    text-align: center;
+    font-size: 10px;
+    color: rgba(0,212,255,0.6);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+  }
+  .sg-link:hover { color: #00d4ff; }
+  .sg-close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: none;
+    border: none;
+    color: rgba(200,216,240,0.3);
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .sg-close:hover { color: #fff; }
+  .sg-thanks {
+    text-align: center;
+    padding: 20px 10px;
+  }
+  .sg-thanks-icon { font-size: 32px; margin-bottom: 8px; }
+  .sg-thanks-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    color: #00ff94;
+    margin-bottom: 6px;
+  }
+  .sg-thanks-sub {
+    font-size: 10px;
+    color: rgba(200,216,240,0.5);
+    line-height: 1.6;
+  }
+
 </style>
 </head>
 <body>
 
 <nav class="top-nav" role="navigation" aria-label="Main navigation">
-  <a href="index.html" class="top-nav-logo">FORECAST OS</a>
+  <a href="index.html" class="top-nav-logo">FUTURECASTTV</a>
   <div class="top-nav-links">
     <a href="briefing.html" class="top-nav-link highlight">⬡ BRIEFING</a>
     <a href="nq.html" class="top-nav-link active">NQ/MNQ</a>
@@ -557,7 +704,7 @@
 <!-- ── SUBSCRIPTION OVERLAY ── -->
 <div class="sub-overlay" id="subOverlay">
   <div class="sub-modal">
-    <div class="sub-logo">FORECAST OS</div>
+    <div class="sub-logo">FUTURECASTTV</div>
     <div class="sub-title">Unlock Full Access</div>
     <div class="sub-sub">
       Institutional-grade futures forecasting.<br>
@@ -621,7 +768,7 @@
   <!-- HEADER -->
   <div class="hdr">
     <div class="hdr-left">
-      <div class="logo">Forecast <span>OS</span></div>
+      <div class="logo">FutureCast<span>TV</span></div>
       <div class="vsep"></div>
       <span class="ticker-lbl" id="tickerLbl">NQ / MNQ</span>
       <span class="price-display" id="priceDisplay">—</span>
@@ -776,7 +923,7 @@
   <!-- BOTTOM BAR -->
   <div class="bottom-bar">
     <span class="disclaimer" id="disclaimer">
-      FORECAST OS v1.0 · SIMULATED DATA — LIVE FEED COMING SOON · FOR ENTERTAINMENT &amp; EDUCATIONAL USE ONLY · NOT FINANCIAL ADVICE · FUTURES TRADING INVOLVES RISK
+      FUTURECASTTV v1.0 · SIMULATED DATA — LIVE FEED COMING SOON · FUTURECASTTV · @FutureCastLive · Focus Faster. Trade Smarter. Stay Green. 🟢 · NOT FINANCIAL ADVICE
     </span>
     <div class="btn-group">
       <button class="btn btn-outline" onclick="refreshData()">↺ REFRESH</button>
@@ -1313,5 +1460,72 @@ setInterval(function(){
 },60000);
 console.log('[POTUSAlert] READY -- POTUSAlert.test(1), test(2), test(3)');
 })();</script>
+
+<!-- SUGGESTION WIDGET -->
+<div class="sg-tab" id="sgTab">
+  <!-- Card (hidden by default) -->
+  <div class="sg-card" id="sgCard" style="display:none;position:relative;">
+    <button class="sg-close" onclick="sgClose()" aria-label="Close">&#x2715;</button>
+    <div id="sgForm">
+      <div class="sg-card-title">&#128161; WHAT DO YOU WANT NEXT?</div>
+      <div class="sg-card-sub">Vote for the next FutureCastTV feature. We build what YOU want.</div>
+      <div class="sg-options">
+        <label class="sg-opt"><input type="checkbox" value="YM / Dow Terminal"> YM / Dow Terminal</label>
+        <label class="sg-opt"><input type="checkbox" value="RTY / Russell Terminal"> RTY / Russell Terminal</label>
+        <label class="sg-opt"><input type="checkbox" value="Bitcoin / Crypto"> Bitcoin / Crypto</label>
+        <label class="sg-opt"><input type="checkbox" value="Options Flow / GEX"> Options Flow / GEX</label>
+        <label class="sg-opt"><input type="checkbox" value="20/200 MA Signal"> 20/200 MA Signal</label>
+        <label class="sg-opt"><input type="checkbox" value="Live Bot P&L Stream"> Live Bot P&#38;L Stream</label>
+        <label class="sg-opt"><input type="checkbox" value="Mobile App"> Mobile App</label>
+      </div>
+      <button class="sg-btn" onclick="sgVote()">CAST MY VOTE &#8594;</button>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScIlC3yPh17Q5KChUSF1JuinuBSDTPUP3Rf-mJVjlS-evVfPw/viewform" target="_blank" class="sg-link">&#128203; Something else? Tell us &#8599;</a>
+    </div>
+    <div id="sgThanks" class="sg-thanks" style="display:none;">
+      <div class="sg-thanks-icon">&#127808;</div>
+      <div class="sg-thanks-title">VOTE RECEIVED!</div>
+      <div class="sg-thanks-sub">
+        We build what traders want.<br>
+        Stay tuned &#8212; Stay Green. &#127808;
+      </div>
+    </div>
+  </div>
+  <!-- Pull tab -->
+  <button class="sg-pill" id="sgPill" onclick="sgToggle()" aria-label="Suggest a feature">
+    &#128161; SUGGEST A FEATURE
+  </button>
+</div>
+
+<script>
+
+var _sgOpen = false;
+function sgToggle() {
+  _sgOpen = !_sgOpen;
+  document.getElementById('sgCard').style.display = _sgOpen ? 'block' : 'none';
+  document.getElementById('sgPill').style.display = _sgOpen ? 'none' : 'flex';
+}
+function sgClose() {
+  _sgOpen = false;
+  document.getElementById('sgCard').style.display = 'none';
+  document.getElementById('sgPill').style.display = 'flex';
+  // Reset form
+  document.getElementById('sgForm').style.display = 'block';
+  document.getElementById('sgThanks').style.display = 'none';
+  document.querySelectorAll('.sg-opt input').forEach(function(cb){ cb.checked=false; });
+}
+function sgVote() {
+  var checked = [];
+  document.querySelectorAll('.sg-opt input:checked').forEach(function(cb){ checked.push(cb.value); });
+  // Open Google Form with selections noted
+  var url = 'https://docs.google.com/forms/d/e/1FAIpQLScIlC3yPh17Q5KChUSF1JuinuBSDTPUP3Rf-mJVjlS-evVfPw/viewform';
+  window.open(url, '_blank');
+  // Show thank you
+  document.getElementById('sgForm').style.display = 'none';
+  document.getElementById('sgThanks').style.display = 'block';
+  // Auto close after 4 seconds
+  setTimeout(sgClose, 4000);
+}
+
+</script>
 </body>
 </html>

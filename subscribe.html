@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FutureCastTV — Morning Intel Membership</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#060810;--bg2:#0a1628;--bg3:#080f1e;
+  --cyan:#00d4ff;--bull:#00ff94;--bear:#ff3b5c;--amber:#ffb800;
+  --text:#c8d8f0;--dim:rgba(200,216,240,0.5);--faint:rgba(200,216,240,0.18);
+  --border:rgba(0,212,255,0.14);--border-hi:rgba(0,212,255,0.35);
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 4px);
+  pointer-events:none;z-index:9999;
+}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:60px 24px 40px;
+  position:relative;overflow:hidden;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(0,212,255,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,212,255,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  animation:gridPulse 8s ease-in-out infinite;
+}
+@keyframes gridPulse{0%,100%{opacity:0.5}50%{opacity:1}}
+.hero-glow{
+  position:absolute;top:20%;left:50%;transform:translateX(-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse,rgba(0,212,255,0.08) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-content{position:relative;z-index:1;max-width:860px;}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:0.25em;color:var(--cyan);
+  text-transform:uppercase;margin-bottom:24px;
+}
+.eyebrow::before,.eyebrow::after{content:'';width:32px;height:1px;background:var(--cyan);opacity:0.4;}
+
+.live-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:700;letter-spacing:0.15em;
+  padding:6px 16px;border-radius:20px;
+  background:rgba(0,255,148,0.08);
+  border:1px solid rgba(0,255,148,0.3);
+  color:var(--bull);margin-bottom:28px;
+}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--bull);animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.15}}
+
+.hero-logo{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(48px,10vw,100px);
+  font-weight:900;letter-spacing:-0.02em;
+  color:#fff;line-height:1;margin-bottom:8px;
+}
+.hero-logo span{color:var(--cyan);}
+
+.hero-tagline{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(13px,2vw,18px);
+  font-weight:400;letter-spacing:0.18em;
+  color:var(--dim);margin-bottom:32px;
+}
+
+.hero-desc{
+  font-size:clamp(16px,2vw,20px);
+  line-height:1.75;color:var(--text);
+  max-width:640px;margin:0 auto 40px;
+}
+.hero-desc strong{color:#fff;}
+
+.hero-markets{
+  display:flex;gap:12px;justify-content:center;
+  flex-wrap:wrap;margin-bottom:48px;
+}
+.market-badge{
+  font-family:'Orbitron',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.1em;
+  padding:6px 16px;border-radius:4px;
+  border:1px solid;
+}
+.mb-nq{color:#00d4ff;border-color:rgba(0,212,255,0.35);background:rgba(0,212,255,0.06);}
+.mb-es{color:#00ff94;border-color:rgba(0,255,148,0.35);background:rgba(0,255,148,0.06);}
+.mb-cl{color:#ffb800;border-color:rgba(255,184,0,0.35);background:rgba(255,184,0,0.06);}
+.mb-gc{color:#ffd700;border-color:rgba(255,215,0,0.35);background:rgba(255,215,0,0.06);}
+.mb-ym{color:#a855f7;border-color:rgba(168,85,247,0.35);background:rgba(168,85,247,0.06);}
+
+/* ── PRICING SECTION ── */
+.section{padding:80px 24px;max-width:1100px;margin:0 auto;}
+.section-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.25em;color:var(--cyan);
+  text-transform:uppercase;margin-bottom:12px;text-align:center;
+}
+.section-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(26px,4vw,42px);font-weight:700;
+  color:#fff;margin-bottom:10px;text-align:center;
+}
+.section-sub{
+  font-size:16px;color:var(--dim);
+  text-align:center;margin-bottom:52px;line-height:1.7;
+}
+.section-sub strong{color:var(--bull);}
+
+/* ── PRICING GRID ── */
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;margin-bottom:32px;
+}
+.price-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:28px 24px;
+  position:relative;overflow:hidden;
+  transition:border-color 0.2s,transform 0.2s;
+}
+.price-card:hover{border-color:var(--border-hi);transform:translateY(-4px);}
+.price-card.featured{border-color:var(--amber);}
+.price-card.featured::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--amber),#ffd700);
+}
+.price-card::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at top,rgba(0,212,255,0.03) 0%,transparent 60%);
+  pointer-events:none;
+}
+.featured-badge{
+  display:inline-block;font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:700;letter-spacing:0.18em;
+  padding:3px 10px;border-radius:2px;margin-bottom:14px;
+  background:rgba(255,184,0,0.12);color:var(--amber);
+  border:1px solid rgba(255,184,0,0.3);
+}
+.price-tier{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.18em;color:var(--dim);
+  text-transform:uppercase;margin-bottom:10px;
+}
+.price-amount{
+  font-family:'Orbitron',sans-serif;
+  font-size:42px;font-weight:900;color:#fff;
+  line-height:1;margin-bottom:3px;
+}
+.price-amount sup{font-size:20px;vertical-align:super;}
+.price-period{font-size:11px;color:var(--dim);margin-bottom:4px;}
+.price-monthly{font-size:13px;color:var(--bull);font-weight:600;margin-bottom:22px;}
+.price-features{margin-bottom:24px;}
+.pf-item{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:5px 0;border-bottom:1px solid rgba(0,212,255,0.06);
+  font-size:13px;color:var(--dim);line-height:1.4;
+}
+.pf-item:last-child{border-bottom:none;}
+.pf-ok{color:var(--bull);flex-shrink:0;font-size:11px;margin-top:2px;}
+.pf-no{color:var(--faint);flex-shrink:0;font-size:11px;margin-top:2px;}
+
+/* ── BUY BUTTONS ── */
+.btn-buy{
+  display:block;width:100%;
+  font-family:'JetBrains Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:0.12em;
+  padding:13px 20px;border-radius:5px;
+  cursor:pointer;border:none;text-align:center;
+  transition:all 0.15s;text-decoration:none;
+}
+.btn-starter{background:rgba(0,212,255,0.12);color:var(--cyan);border:1px solid var(--border-hi);}
+.btn-starter:hover{background:rgba(0,212,255,0.22);}
+.btn-popular{background:var(--cyan);color:#060810;}
+.btn-popular:hover{background:#00eeff;transform:translateY(-1px);}
+.btn-pro{background:rgba(0,255,148,0.12);color:var(--bull);border:1px solid rgba(0,255,148,0.3);}
+.btn-pro:hover{background:rgba(0,255,148,0.22);}
+.btn-full{background:rgba(255,184,0,0.12);color:var(--amber);border:1px solid rgba(255,184,0,0.3);}
+.btn-full:hover{background:rgba(255,184,0,0.22);}
+
+.trial-note{
+  text-align:center;font-size:12px;color:var(--dim);
+  font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;
+}
+.trial-note strong{color:var(--bull);}
+
+/* ── FEATURES SECTION ── */
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:16px;
+}
+.feature-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:6px;padding:24px;
+  transition:border-color 0.2s;
+}
+.feature-card:hover{border-color:var(--border-hi);}
+.feature-icon{font-size:28px;margin-bottom:12px;}
+.feature-title{
+  font-family:'Orbitron',sans-serif;
+  font-size:13px;font-weight:700;color:#fff;
+  letter-spacing:0.06em;margin-bottom:8px;
+}
+.feature-desc{font-size:13px;color:var(--dim);line-height:1.7;}
+
+/* ── SCHEDULE ── */
+.schedule{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:8px;padding:32px;
+}
+.schedule-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+.sched-item{
+  padding:16px;border-radius:5px;
+  border:1px solid rgba(0,212,255,0.1);
+  background:rgba(0,212,255,0.03);
+}
+.sched-time{
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;font-weight:700;color:var(--cyan);
+  margin-bottom:5px;
+}
+.sched-name{font-size:13px;color:#fff;font-weight:600;margin-bottom:3px;}
+.sched-desc{font-size:11px;color:var(--dim);}
+.sched-free{
+  display:inline-block;font-size:9px;letter-spacing:0.1em;
+  padding:2px 6px;border-radius:2px;margin-top:4px;
+  background:rgba(0,255,148,0.1);color:var(--bull);
+  border:1px solid rgba(0,255,148,0.25);
+}
+.sched-pro{
+  display:inline-block;font-size:9px;letter-spacing:0.1em;
+  padding:2px 6px;border-radius:2px;margin-top:4px;
+  background:rgba(0,212,255,0.08);color:var(--cyan);
+  border:1px solid var(--border-hi);
+}
+
+/* ── DISCLAIMER ── */
+.disclaimer{
+  background:rgba(255,184,0,0.04);
+  border:1px solid rgba(255,184,0,0.15);
+  border-radius:5px;padding:16px 20px;
+  font-size:11px;color:var(--dim);line-height:1.8;
+  text-align:center;
+}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid var(--border);
+  padding:28px 24px;text-align:center;
+}
+.footer-brand{
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;font-weight:700;
+  color:var(--cyan);letter-spacing:0.2em;margin-bottom:8px;
+}
+.footer-links{font-size:11px;color:var(--dim);}
+
+/* ── TICKER TAPE ── */
+.tape{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  overflow:hidden;height:36px;display:flex;align-items:center;
+  position:sticky;top:0;z-index:100;
+}
+.tape-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.15em;color:var(--cyan);
+  padding:0 14px;border-right:1px solid var(--border);
+  height:100%;display:flex;align-items:center;
+  background:rgba(0,212,255,0.06);white-space:nowrap;flex-shrink:0;
+}
+.tape-wrap{flex:1;overflow:hidden;}
+.tape-scroll{
+  display:flex;align-items:center;white-space:nowrap;
+  animation:scrollTape 40s linear infinite;
+}
+@keyframes scrollTape{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.tape-item{font-family:'JetBrains Mono',monospace;font-size:12px;padding:0 20px;display:inline-flex;align-items:center;gap:6px;}
+.t-sym{color:#fff;font-weight:700;}
+.t-up{color:var(--bull);}.t-dn{color:var(--bear);}
+
+@media(max-width:640px){
+  .pricing-grid{grid-template-columns:1fr;}
+  .hero-markets{gap:8px;}
+}
+
+/* ── SCROLL ANIMATIONS ── */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<!-- TICKER TAPE -->
+<div class="tape">
+  <div class="tape-label">⬡ FCTV LIVE</div>
+  <div class="tape-wrap">
+    <div class="tape-scroll">
+      <span class="tape-item"><span class="t-sym">NQ</span><span>21,847.50</span><span class="t-up">▲0.64%</span></span>
+      <span class="tape-item" style="color:var(--border)">|</span>
+      <span class="tape-item"><span class="t-sym">ES</span><span>5,923.25</span><span class="t-up">▲0.48%</span></span>
+      <span class="tape-item" style="color:var(--border)">|</span>
+      <span class="tape-item"><span class="t-sym">CL</span><span>72.14</span><span class="t-dn">▼0.82%</span></span>
+      <span class="tape-item" style="color:var(--border)">|</span>
+      <span class="tape-item"><span class="t-sym">GC</span><span>4,162.30</span><span class="t-up">▲0.31%</span></span>
+      <span class="tape-item" style="color:var(--border)">|</span>
+      <span class="tape-item"><span class="t-sym">YM</span><span>43,820</span><span class="t-up">▲0.55%</span></span>
+      <span class="tape-item" style="color:var(--border)">|</span>
+      <span class="tape-item"><span class="t-sym">SPCX</span><span>165.40</span><span class="t-up">▲1.24%</span></span>
+      <span class="tape-item" style="color:var(--border)">|</span>
+      <span class="tape-item"><span class="t-sym">SI</span><span>32.87</span><span class="t-up">▲0.18%</span></span>
+      <span class="tape-item" style="color:var(--border)">|</span>
+      <span class="tape-item" style="color:rgba(0,212,255,0.5);font-size:10px;letter-spacing:0.1em;">FUTURECASTTV · HARD CORE DATA · MORNING BRIEFING 7AM CST · FREE DAILY · STAY GREEN 🟢</span>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+
+    <div class="eyebrow">Real-Time Futures Intelligence</div>
+
+    <div class="live-pill">
+      <span class="live-dot"></span>
+      STREAMING 24/7 · @FutureCastLive
+    </div>
+
+    <h1 class="hero-logo">FUTURE<span>CAST</span>TV</h1>
+    <div class="hero-tagline">HARD CORE DATA · MORNING BRIEFING · 7AM CST</div>
+
+    <p class="hero-desc">
+      <strong>AI-powered market intelligence</strong> for futures traders who want to see the next 15 minutes with data-driven probability, institutional-grade analytics, and a live probability forecast cone.
+      <br><br>
+      Focus faster. Trade smarter. <strong style="color:var(--bull)">Stay Green. 🟢</strong>
+    </p>
+
+    <div class="hero-markets">
+      <span class="market-badge mb-nq">NQ / MNQ</span>
+      <span class="market-badge mb-es">ES / MES</span>
+      <span class="market-badge mb-cl">CL / MCL</span>
+      <span class="market-badge mb-gc">GC / MGC</span>
+      <span class="market-badge mb-ym">YM / MYM</span>
+    </div>
+
+    <!-- FREE TIER BANNER -->
+    <div style="background:rgba(0,255,148,0.06);border:1px solid rgba(0,255,148,0.25);border-radius:8px;padding:20px 28px;max-width:580px;margin:0 auto 32px;">
+      <div style="font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:var(--bull);letter-spacing:0.1em;margin-bottom:8px;">
+        🟢 FREE MORNING BRIEFING — NO CREDIT CARD EVER
+      </div>
+      <div style="font-size:14px;color:var(--text);line-height:1.7;margin-bottom:14px;">
+        Get our <strong style="color:#fff;">daily AI-powered pre-market briefing</strong> for ES · NQ · YM · GC · CL — 
+        free every trading day at 7AM CT. Just send us your email and we'll deliver it directly to you.
+      </div>
+      <div style="background:rgba(0,255,148,0.08);border:1px solid rgba(0,255,148,0.25);border-radius:4px;padding:12px 20px;display:inline-block;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--bull);letter-spacing:0.06em;margin-bottom:4px;">
+          ✉ EMAIL US TO SUBSCRIBE FREE
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#fff;letter-spacing:0.04em;">
+          futurecasttv@gmail.com
+        </div>
+        <div style="font-size:10px;color:var(--dim);margin-top:6px;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;">
+          Subject: FREE Morning Briefing · We add you instantly
+        </div>
+      </div>
+    </div>
+
+    <!-- PRIMARY BUY BUTTON -->
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:0.08em;margin-bottom:12px;">
+      Want the full terminal experience? Start your free trial:
+    </div>
+    <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-popular" style="max-width:320px;margin:0 auto 16px;font-size:14px;padding:16px;">
+      START FREE 7-DAY TRIAL →
+    </a>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:0.08em;">
+      No card required to start · Cancel anytime · Billed annually
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="section fade-in">
+  <div class="section-label">What You Get</div>
+  <h2 class="section-title">Your Trading Edge — Free &amp; Paid</h2>
+  <p class="section-sub">Everything you need to see the next 15 minutes clearly.</p>
+
+  <div class="features-grid">
+    <div class="feature-card fade-in">
+      <div class="feature-icon">⬡</div>
+      <div class="feature-title">PROBABILITY FORECAST CONE</div>
+      <div class="feature-desc">Statistical probability bands showing where price is likely to go — intraday through 4-day swing. Bull zone, base case, bear zone. Updated every 15 minutes.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">INSTITUTIONAL KEY LEVELS</div>
+      <div class="feature-desc">R1·R2·R3 resistance and S1·S2·S3 support levels calculated from real pivot math. POC and VWAP plotted. The levels that matter to the big money.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🤖</div>
+      <div style="display:inline-block;font-size:9px;letter-spacing:0.1em;padding:2px 8px;border-radius:2px;background:rgba(0,255,148,0.1);color:var(--bull);border:1px solid rgba(0,255,148,0.25);margin-bottom:8px;font-family:JetBrains Mono,monospace;">FREE DAILY</div>
+      <div class="feature-title">AI MORNING BRIEFING</div>
+      <div class="feature-desc">Fresh AI-generated market analysis at 7AM CT every trading day. Pre-market setup, news reaction, open reaction, mid-day pulse, afternoon setup, power hour. 6 sessions daily.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🤠</div>
+      <div class="feature-title">POTUS TAPE BOMB ALERTS</div>
+      <div class="feature-desc">Three-level alert system for market-moving events. Level 1 heads-up, Level 2 tape bomb banner, Level 3 full-screen nuke with bobblehead. Because sometimes the President moves markets.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">📡</div>
+      <div style="display:inline-block;font-size:9px;letter-spacing:0.1em;padding:2px 8px;border-radius:2px;background:rgba(0,255,148,0.1);color:var(--bull);border:1px solid rgba(0,255,148,0.25);margin-bottom:8px;font-family:JetBrains Mono,monospace;">FREE ALWAYS</div>
+      <div class="feature-title">24/7 LIVE STREAM</div>
+      <div class="feature-desc">FutureCastTV streams live on YouTube around the clock. Terminals, briefings, and market updates — on in the background while you trade. Subscribe @FutureCastLive.</div>
+    </div>
+    <div class="feature-card fade-in">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">6-TIMEFRAME BIAS SCORE</div>
+      <div class="feature-desc">Morning prep, intraday, swing, trend MA, momentum, and macro — all synthesized into a single directional bias with bull/bear/neutral probability scores.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div class="section fade-in">
+  <div class="section-label">Daily Schedule</div>
+  <h2 class="section-title">Your Data Diet</h2>
+  <p class="section-sub">Consistent. Automated. Always on time.</p>
+
+  <div class="schedule">
+    <div class="schedule-grid">
+      <div class="sched-item">
+        <div class="sched-time">7:00 AM</div>
+        <div class="sched-name">Pre-Market Brief</div>
+        <div class="sched-desc">Overnight action, key levels, bias call, game plan</div>
+        <span class="sched-free">FREE</span>
+      </div>
+      <div class="sched-item">
+        <div class="sched-time">7:30 AM</div>
+        <div class="sched-name">News Reaction</div>
+        <div class="sched-desc">How economic releases change the setup</div>
+        <span class="sched-pro">PRO</span>
+      </div>
+      <div class="sched-item">
+        <div class="sched-time">9:45 AM</div>
+        <div class="sched-name">Open Reaction</div>
+        <div class="sched-desc">First 15-min candle read, VWAP check, first setup</div>
+        <span class="sched-pro">PRO</span>
+      </div>
+      <div class="sched-item">
+        <div class="sched-time">11:00 AM</div>
+        <div class="sched-name">Mid-Morning Pulse</div>
+        <div class="sched-desc">Session scorecard, momentum check, lunch trap</div>
+        <span class="sched-pro">PRO</span>
+      </div>
+      <div class="sched-item">
+        <div class="sched-time">1:00 PM</div>
+        <div class="sched-name">Afternoon Setup</div>
+        <div class="sched-desc">Power hour positioning, close targets</div>
+        <span class="sched-pro">PRO</span>
+      </div>
+      <div class="sched-item">
+        <div class="sched-time">3:00 PM</div>
+        <div class="sched-name">Power Hour Brief</div>
+        <div class="sched-desc">Final hour levels, MOC watch, overnight setup</div>
+        <span class="sched-pro">PRO</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:24px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:0.08em;">
+      PLUS 15-MINUTE PULSE UPDATES BETWEEN SESSIONS · 7AM → 3:30PM CT DAILY
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="section fade-in" style="text-align:center;padding-bottom:40px;">
+  <div class="section-label">Get Started</div>
+  <h2 class="section-title">Start Free Today</h2>
+  <p class="section-sub" style="margin-bottom:36px;">
+    7 days free. No card required.<br>
+    One trade pays for a full year.
+  </p>
+
+  <a data-gumroad-action="buy" data-gumroad-recurrence="yearly"
+     class="btn-buy btn-popular"
+     style="max-width:360px;margin:0 auto 16px;font-size:15px;padding:18px;display:block;">
+    START YOUR FREE TRIAL →
+  </a>
+
+  <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:0.08em;margin-bottom:40px;">
+    Cancel anytime · Billed annually · 2 months free vs monthly
+  </p>
+
+  <div class="disclaimer">
+    <strong style="color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;">
+      🔭 FOR ENTERTAINMENT &amp; EDUCATIONAL USE ONLY — NOT FINANCIAL ADVICE
+    </strong><br>
+    FutureCastTV is a set of binoculars for the racing action. We help you see the track clearly — we are not your financial advisor.
+    All content is for entertainment and educational purposes only. Futures trading involves substantial risk of loss.
+    Past performance does not guarantee future results. Always consult a qualified financial professional.
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section fade-in" id="pricing">
+  <div class="section-label">Membership Plans</div>
+  <h2 class="section-title">Choose Your Edge</h2>
+  <p class="section-sub">
+    Billed annually — <strong>2 months free</strong> vs monthly.<br>
+    7-day free trial on all plans. No card required to start.
+  </p>
+
+  <div class="pricing-grid">
+
+    <!-- TIER 1 -->
+    <div class="price-card fade-in">
+      <div class="price-tier">Morning Intel</div>
+      <div class="price-amount"><sup>$</sup>10</div>
+      <div class="price-period">per year</div>
+      <div class="price-monthly">= $0.83 / month</div>
+      <div class="price-features">
+        <div class="pf-item"><span class="pf-ok">✓</span>AI Morning Briefing 7AM CT</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>6 daily anchor sessions</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>15-min pulse updates</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>Economic events calendar</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>Session bias score</div>
+        <div class="pf-item"><span class="pf-no">✗</span>Live terminals</div>
+        <div class="pf-item"><span class="pf-no">✗</span>Forecast cone</div>
+      </div>
+      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-starter">
+        START FREE TRIAL
+      </a>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="price-card featured fade-in">
+      <div class="featured-badge">MOST POPULAR</div>
+      <div class="price-tier">Trader Starter</div>
+      <div class="price-amount"><sup>$</sup>24</div>
+      <div class="price-period">per year</div>
+      <div class="price-monthly">= $2.00 / month</div>
+      <div class="price-features">
+        <div class="pf-item"><span class="pf-ok">✓</span>Everything in Morning Intel</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>ES / MES Terminal</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>NQ / MNQ Terminal</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>Probability forecast cone</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>8 key institutional levels</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>POTUS tape bomb alerts 🤠</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>Mag 10 stocks panel</div>
+      </div>
+      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-popular">
+        START FREE TRIAL →
+      </a>
+    </div>
+
+    <!-- TIER 3 -->
+    <div class="price-card fade-in">
+      <div class="price-tier">Full Indices</div>
+      <div class="price-amount"><sup>$</sup>48</div>
+      <div class="price-period">per year</div>
+      <div class="price-monthly">= $4.00 / month</div>
+      <div class="price-features">
+        <div class="pf-item"><span class="pf-ok">✓</span>Everything in Trader Starter</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>YM / MYM Dow Terminal</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>RTY / M2K Russell Terminal</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>All 4 index terminals</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>Full confluence engine</div>
+        <div class="pf-item"><span class="pf-no">✗</span>Commodities terminals</div>
+        <div class="pf-item"><span class="pf-no">✗</span>Metals terminals</div>
+      </div>
+      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-pro">
+        START FREE TRIAL
+      </a>
+    </div>
+
+    <!-- TIER 4 -->
+    <div class="price-card fade-in">
+      <div class="price-tier">Full Access</div>
+      <div class="price-amount"><sup>$</sup>84</div>
+      <div class="price-period">per year</div>
+      <div class="price-monthly">= $7.00 / month</div>
+      <div class="price-features">
+        <div class="pf-item"><span class="pf-ok">✓</span>Everything in Full Indices</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>CL / MCL Crude Oil Terminal</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>GC / MGC Gold Terminal</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>SI / SIL Silver Terminal</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>⛽ Monthly $50 Gas Card Entry</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>RoboTrades signals (coming)</div>
+        <div class="pf-item"><span class="pf-ok">✓</span>First access to new features</div>
+      </div>
+      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-full">
+        START FREE TRIAL
+      </a>
+    </div>
+
+  </div>
+
+  <p class="trial-note">
+    <strong>✦ 7-DAY FREE TRIAL — NO CARD REQUIRED ✦</strong><br>
+    Cancel anytime · Billed annually · Save 2 months vs monthly pricing
+  </p>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">FUTURECASTTV</div>
+  <div class="footer-links">
+    @FutureCastLive · Focus Faster · Trade Smarter · Stay Green 🟢
+  </div>
+</footer>
+
+<script>
+// Scroll animation
+const observer = new IntersectionObserver(
+  entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }),
+  { threshold: 0.1 }
+);
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Animate ticker prices slightly
+setInterval(function() {
+  document.querySelectorAll('.tape-item').forEach(function(item) {
+    const px = item.querySelector('span:nth-child(2)');
+    const chg = item.querySelector('.t-up, .t-dn');
+    if (!px || !chg) return;
+    const base = parseFloat(px.textContent.replace(',',''));
+    if (isNaN(base)) return;
+    const drift = (Math.random() - 0.49) * base * 0.0002;
+    const newPx = base + drift;
+    px.textContent = newPx > 100
+      ? newPx.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})
+      : newPx.toFixed(2);
+  });
+}, 3000);
+</script>
+</body>
+</html>
