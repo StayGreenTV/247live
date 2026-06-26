@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FutureCastTV — Morning Intel Membership</title>
+<title>FutureCastTV — Subscribe & Get Access</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -304,9 +304,50 @@ footer{
 /* ── SCROLL ANIMATIONS ── */
 .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease;}
 .fade-in.visible{opacity:1;transform:translateY(0);}
+
+  .top-nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(6,8,16,0.95);
+    border-bottom:1px solid rgba(0,212,255,0.2);
+    backdrop-filter:blur(10px);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;height:52px;
+  }
+  .top-nav-logo{
+    font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;
+    letter-spacing:0.2em;color:#00d4ff;text-decoration:none;
+  }
+  .top-nav-links{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+  .top-nav-link{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:0.1em;
+    color:rgba(200,216,240,0.6);text-decoration:none;
+    padding:6px 12px;border-radius:3px;
+    border:1px solid transparent;transition:all 0.15s;white-space:nowrap;
+  }
+  .top-nav-link:hover{color:#00d4ff;border-color:rgba(0,212,255,0.3);background:rgba(0,212,255,0.06);}
+  .top-nav-link.active{color:#00ff94;border-color:rgba(0,255,148,0.3);background:rgba(0,255,148,0.06);}
+  body{padding-top:52px;}
+
 </style>
 </head>
 <body>
+
+<nav class="top-nav">
+  <a href="index.html" class="top-nav-logo">FUTURECASTTV</a>
+  <div class="top-nav-links">
+    <a href="briefing.html" class="top-nav-link highlight">⬡ BRIEFING</a>
+    <a href="nq.html" class="top-nav-link ">NQ/MNQ</a>
+    <a href="es.html" class="top-nav-link ">ES/MES</a>
+    <a href="ym.html" class="top-nav-link ">YM/MYM</a>
+    <a href="mcl.html" class="top-nav-link ">CL/MCL</a>
+    <a href="gc.html" class="top-nav-link ">GOLD</a>
+    <a href="si.html" class="top-nav-link ">SILVER</a>
+    <a href="subscribe.html" class="top-nav-link active" style="color:#00ff94;border-color:rgba(0,255,148,0.3);">SUBSCRIBE ✦</a>
+    <a href="index.html" class="top-nav-link ">← HUB</a>
+  </div>
+</nav>
+
 
 <!-- TICKER TAPE -->
 <div class="tape">
@@ -376,7 +417,7 @@ footer{
           ✉ EMAIL US TO SUBSCRIBE FREE
         </div>
         <div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:#fff;letter-spacing:0.04em;">
-          futurecasttv@gmail.com
+          <a href="mailto:futurecasttv@gmail.com?subject=FREE Morning Briefing&body=Please add me to the free FutureCastTV Morning Briefing!" style="color:var(--bull);text-decoration:none;">futurecasttv@gmail.com</a>
         </div>
         <div style="font-size:10px;color:var(--dim);margin-top:6px;font-family:'JetBrains Mono',monospace;letter-spacing:0.06em;">
           Subject: FREE Morning Briefing · We add you instantly
@@ -388,7 +429,7 @@ footer{
     <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:0.08em;margin-bottom:12px;">
       Want the full terminal experience? Start your free trial:
     </div>
-    <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-popular" style="max-width:320px;margin:0 auto 16px;font-size:14px;padding:16px;">
+    <a href="https://macterrence.gumroad.com/l/lremwx" target="_blank" class="btn-buy btn-popular" style="max-width:320px;margin:0 auto 16px;font-size:14px;padding:16px;">
       START FREE 7-DAY TRIAL →
     </a>
     <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:0.08em;">
@@ -500,9 +541,7 @@ footer{
     One trade pays for a full year.
   </p>
 
-  <a data-gumroad-action="buy" data-gumroad-recurrence="yearly"
-     class="btn-buy btn-popular"
-     style="max-width:360px;margin:0 auto 16px;font-size:15px;padding:18px;display:block;">
+  <a href="https://macterrence.gumroad.com/l/lremwx" target="_blank" class="btn-buy btn-popular">
     START YOUR FREE TRIAL →
   </a>
 
@@ -546,7 +585,7 @@ footer{
         <div class="pf-item"><span class="pf-no">✗</span>Live terminals</div>
         <div class="pf-item"><span class="pf-no">✗</span>Forecast cone</div>
       </div>
-      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-starter">
+      <a href="https://macterrence.gumroad.com/l/lremwx" target="_blank" class="btn-buy btn-starter">
         START FREE TRIAL
       </a>
     </div>
@@ -567,7 +606,7 @@ footer{
         <div class="pf-item"><span class="pf-ok">✓</span>POTUS tape bomb alerts 🤠</div>
         <div class="pf-item"><span class="pf-ok">✓</span>Mag 10 stocks panel</div>
       </div>
-      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-popular">
+      <a href="https://macterrence.gumroad.com/l/lremwx" target="_blank" class="btn-buy btn-popular">
         START FREE TRIAL →
       </a>
     </div>
@@ -587,7 +626,7 @@ footer{
         <div class="pf-item"><span class="pf-no">✗</span>Commodities terminals</div>
         <div class="pf-item"><span class="pf-no">✗</span>Metals terminals</div>
       </div>
-      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-pro">
+      <a href="https://macterrence.gumroad.com/l/lremwx" target="_blank" class="btn-buy btn-pro">
         START FREE TRIAL
       </a>
     </div>
@@ -607,7 +646,7 @@ footer{
         <div class="pf-item"><span class="pf-ok">✓</span>RoboTrades signals (coming)</div>
         <div class="pf-item"><span class="pf-ok">✓</span>First access to new features</div>
       </div>
-      <a data-gumroad-action="buy" data-gumroad-recurrence="yearly" class="btn-buy btn-full">
+      <a href="https://macterrence.gumroad.com/l/lremwx" target="_blank" class="btn-buy btn-full">
         START FREE TRIAL
       </a>
     </div>
@@ -625,7 +664,7 @@ footer{
 <footer>
   <div class="footer-brand">FUTURECASTTV</div>
   <div class="footer-links">
-    @FutureCastLive · Focus Faster · Trade Smarter · Stay Green 🟢
+    <a href="https://www.youtube.com/@FutureCastLive" target="_blank" style="color:var(--dim);text-decoration:none;">@FutureCastLive</a> · Focus Faster · Trade Smarter · Stay Green 🟢
   </div>
 </footer>
 
