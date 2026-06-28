@@ -887,11 +887,12 @@
 <script>
 // ── SYMBOL CONFIG ──────────────────────────────────────────────
 const SYMBOLS = {
-  ES:  { label:'YM / MYM', name:'Dow Jones E-Mini Futures', base:43820,  atr:185,   tickSize:0.25 },
-  NQ:  { label:'NQ / MNQ', name:'Nasdaq 100 Futures',     base:21840, atr:310,  tickSize:0.25 },
-  MCL: { label:'MCL',      name:'Micro Crude Oil',         base:75.40, atr:1.85, tickSize:0.01, decimals:2 },
-  GC:  { label:'GC',       name:'Gold Futures',            base:4157,  atr:55,   tickSize:0.1  },
-  SI:  { label:'SI',       name:'Silver Futures',          base:32.80, atr:0.95, tickSize:0.005, decimals:3 },
+  YM:  { label:'YM / MYM', name:'Dow Jones E-Mini Futures', base:43820, atr:185,  tickSize:1    },
+  ES:  { label:'ES / MES', name:'S&P 500 E-Mini Futures',   base:5920,  atr:68,   tickSize:0.25 },
+  NQ:  { label:'NQ / MNQ', name:'Nasdaq 100 Futures',       base:21840, atr:310,  tickSize:0.25 },
+  MCL: { label:'MCL',      name:'Micro Crude Oil',          base:75.40, atr:1.85, tickSize:0.01, decimals:2 },
+  GC:  { label:'GC',       name:'Gold Futures',             base:4157,  atr:55,   tickSize:0.1  },
+  SI:  { label:'SI',       name:'Silver Futures',           base:32.80, atr:0.95, tickSize:0.005, decimals:3 },
 };
 
 const LOCKED = ['NQ','ES','MCL','GC','SI'];
