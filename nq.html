@@ -922,9 +922,9 @@
     <!-- COL 2 (25%): KEY LEVELS + BIAS + CONFLUENCE -->
     <div style="display:flex;flex-direction:column;gap:8px;height:100%;">
 
-      <!-- DIRECTIONAL BIAS -->
+      <!-- LIQUIDITY PATH -->
       <div class="panel">
-        <div class="panel-title">Directional Bias</div>
+        <div class="panel-title">Liquidity Path</div>
         <div class="bias-row">
           <span class="bias-tag" style="color:var(--bull)">BULL</span>
           <div class="bar-track"><div class="bar-fill fill-bull" id="bullBar" style="width:0%"></div></div>
@@ -950,7 +950,7 @@
 
       <!-- CONFLUENCE -->
       <div class="panel">
-        <div class="panel-title">Confluence Checklist</div>
+        <div class="panel-title">Key Magnets</div>
         <div id="confPanel"></div>
       </div>
 
@@ -996,22 +996,22 @@
             <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(220,230,248,0.7);">VIX</div>
             <div style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:#fff;" id="vixValue">18.4</div>
           </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;">
-            <div style="display:flex;align-items:center;gap:8px;width:100%;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;padding:0 10px;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;">
               <div id="light-green" style="width:52px;height:52px;border-radius:50%;background:rgba(0,255,148,0.1);border:2px solid rgba(0,255,148,0.2);flex-shrink:0;transition:all 0.5s;"></div>
-              <div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,255,148,0.9);font-weight:700;">CALM</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX &lt; 15</div></div>
+              <div style="text-align:left;min-width:70px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(0,255,148,0.9);font-weight:700;">CALM</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX &lt; 15</div></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;width:100%;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;">
               <div id="light-yellow" style="width:52px;height:52px;border-radius:50%;background:rgba(255,230,0,0.1);border:2px solid rgba(255,230,0,0.2);flex-shrink:0;transition:all 0.5s;"></div>
-              <div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,230,0,0.9);font-weight:700;">NORMAL</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX 15-20</div></div>
+              <div style="text-align:left;min-width:70px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,230,0,0.9);font-weight:700;">NORMAL</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX 15-20</div></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;width:100%;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;">
               <div id="light-orange" style="width:52px;height:52px;border-radius:50%;background:rgba(255,140,0,0.1);border:2px solid rgba(255,140,0,0.2);flex-shrink:0;transition:all 0.5s;"></div>
-              <div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,140,0,0.9);font-weight:700;">FEAR</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX 20-30</div></div>
+              <div style="text-align:left;min-width:70px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,140,0,0.9);font-weight:700;">FEAR</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX 20-30</div></div>
             </div>
-            <div style="display:flex;align-items:center;gap:8px;width:100%;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;">
               <div id="light-red" style="width:52px;height:52px;border-radius:50%;background:rgba(255,59,92,0.1);border:2px solid rgba(255,59,92,0.2);flex-shrink:0;transition:all 0.5s;"></div>
-              <div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,59,92,0.9);font-weight:700;">PANIC</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX &gt; 30</div></div>
+              <div style="text-align:left;min-width:70px;"><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,59,92,0.9);font-weight:700;">PANIC</div><div style="font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(220,230,248,0.5);">VIX &gt; 30</div></div>
             </div>
           </div>
         </div>
