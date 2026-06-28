@@ -151,8 +151,9 @@
   /* ── MAIN BODY ── */
   .body-grid {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 380px;
     gap: 10px;
+    align-items: start;
   }
 
   /* ── CHART PANEL ── */
@@ -898,81 +899,83 @@
 
   <!-- BODY: CHART + SIDEBAR -->
   <div class="body-grid">
+
+    <!-- LEFT PANEL: QQQ CHART + VIX -->
     <div class="chart-panel">
-
-    <!-- TRADINGVIEW LIVE CHART -->
-    <div style="background:var(--bg2);border:1px solid rgba(0,212,255,0.75);border-radius:6px;overflow:hidden;margin-bottom:10px;">
-      <div style="padding:6px 14px;border-bottom:1px solid rgba(0,212,255,0.60);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#00d4ff;">&#11041; QQQ / NQ PROXY &middot; 3-MIN LIVE</div>
-      <div class="tradingview-widget-container" style="height:360px;">
-        <div id="tv_chart_nq" style="height:360px;width:100%;"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-        <script type="text/javascript">
-        new TradingView.widget({
-          autosize: true,
-          symbol: "NASDAQ:QQQ",
-          interval: "3",
-          timezone: "America/Chicago",
-          theme: "dark",
-          style: "1",
-          locale: "en",
-          enable_publishing: false,
-          hide_top_toolbar: false,
-          hide_legend: true,
-          save_image: false,
-          allow_symbol_change: false,
-          container_id: "tv_chart_nq",
-          backgroundColor: "rgba(6,8,16,1)",
-          gridColor: "rgba(0,212,255,0.08)"
-        });
-        </script>
-      </div>
-    </div>
-
-    <!-- TRADINGVIEW LIVE CHART -->
-    <div style="background:var(--bg2);border:1px solid var(--border-hi);border-radius:6px;overflow:hidden;margin-bottom:12px;">
-      <div style="padding:8px 14px;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--cyan);">⬡ LIVE CHART &middot; NQ/MNQ &middot; 3-MIN</div>
-      <div class="tradingview-widget-container" style="height:380px;">
-        <div id="tv_chart_nq" style="height:380px;"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-        <script type="text/javascript">
-        new TradingView.widget({
-          autosize: true,
-          symbol: "CME_MINI:NQ1!",
-          interval: "3",
-          timezone: "America/Chicago",
-          theme: "dark",
-          style: "1",
-          locale: "en",
-          enable_publishing: false,
-          hide_top_toolbar: false,
-          save_image: false,
-          container_id: "tv_chart_nq",
-          backgroundColor: "rgba(6,8,16,1)",
-          gridColor: "rgba(0,212,255,0.06)"
-        });
-        </script>
-      </div>
-    </div>
-
-      <div class="chart-hdr">
-        <span class="chart-title">Probability Forecast Cone — Intraday → 4-Day Swing</span>
-        <div class="legend">
-          <span class="leg-item"><span class="leg-dot" style="background:rgba(0,255,148,0.55)"></span>Bull zone</span>
-          <span class="leg-item"><span class="leg-dot" style="background:#00d4ff"></span>Base case</span>
-          <span class="leg-item"><span class="leg-dot" style="background:rgba(255,59,92,0.55)"></span>Bear zone</span>
-          <span class="leg-item"><span class="leg-dot" style="background:rgba(0,212,255,0.18)"></span>68% band</span>
+      <div style="background:var(--bg2);border:1px solid rgba(0,212,255,0.55);border-radius:6px;overflow:hidden;margin-bottom:8px;">
+        <div style="padding:6px 14px;border-bottom:1px solid rgba(0,212,255,0.35);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#00d4ff;">&#11041; QQQ &middot; NQ PROXY &middot; 3-MIN LIVE</div>
+        <div class="tradingview-widget-container" style="height:320px;">
+          <div id="tv_chart_qqq" style="height:320px;width:100%;"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+          <script type="text/javascript">
+          new TradingView.widget({
+            autosize: true,
+            symbol: "NASDAQ:QQQ",
+            interval: "3",
+            timezone: "America/Chicago",
+            theme: "dark",
+            style: "1",
+            locale: "en",
+            enable_publishing: false,
+            hide_top_toolbar: false,
+            hide_legend: true,
+            save_image: false,
+            allow_symbol_change: false,
+            container_id: "tv_chart_qqq",
+            backgroundColor: "rgba(6,8,16,1)",
+            gridColor: "rgba(0,212,255,0.08)"
+          });
+          </script>
         </div>
       </div>
-      <div class="chart-canvas-wrap">
-        <canvas id="forecastChart"
-          role="img"
-          aria-label="NQ futures probability forecast cone showing bull, base case, and bear price zones projecting from current price across intraday and 4-day swing horizon">
-          NQ/MNQ futures forecast: base case, bull zone, and bear zone projections across session and swing timeframes.
-        </canvas>
+      <div style="background:var(--bg2);border:1px solid rgba(0,212,255,0.55);border-radius:6px;overflow:hidden;">
+        <div style="padding:6px 14px;border-bottom:1px solid rgba(0,212,255,0.35);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#ff3b5c;">&#11041; VIX &middot; FEAR GAUGE &middot; DAILY</div>
+        <div class="tradingview-widget-container" style="height:180px;">
+          <div id="tv_chart_vix" style="height:180px;width:100%;"></div>
+          <script type="text/javascript">
+          new TradingView.widget({
+            autosize: true,
+            symbol: "CBOE:VIX",
+            interval: "D",
+            timezone: "America/Chicago",
+            theme: "dark",
+            style: "2",
+            locale: "en",
+            enable_publishing: false,
+            hide_top_toolbar: true,
+            hide_legend: true,
+            save_image: false,
+            allow_symbol_change: false,
+            container_id: "tv_chart_vix",
+            backgroundColor: "rgba(6,8,16,1)",
+            gridColor: "rgba(255,59,92,0.06)"
+          });
+          </script>
+        </div>
       </div>
     </div>
 
+    <!-- RIGHT PANEL: CONE + LEVELS + BIAS -->
     <div class="sidebar">
+
+      <!-- CONE -->
+      <div class="chart-panel" style="margin-bottom:8px;">
+        <div class="chart-hdr">
+          <span class="chart-title">Probability Forecast Cone</span>
+          <div class="legend">
+            <span class="leg-item"><span class="leg-dot" style="background:rgba(0,255,148,0.55)"></span>Bull</span>
+            <span class="leg-item"><span class="leg-dot" style="background:#00d4ff"></span>Base</span>
+            <span class="leg-item"><span class="leg-dot" style="background:rgba(255,59,92,0.55)"></span>Bear</span>
+          </div>
+        </div>
+        <div class="chart-canvas-wrap">
+          <canvas id="forecastChart"
+            role="img"
+            aria-label="NQ futures probability forecast cone">
+          </canvas>
+        </div>
+      </div>
+
       <!-- DIRECTIONAL BIAS -->
       <div class="panel">
         <div class="panel-title">Directional Bias</div>
@@ -1004,10 +1007,11 @@
         <div class="panel-title">Confluence Checklist</div>
         <div id="confPanel"></div>
       </div>
+
     </div>
   </div>
 
-  <!-- TIMEFRAME GRID -->
+    <!-- TIMEFRAME GRID -->
   <div class="tf-grid">
     <div class="tf-card">
       <div class="tf-name">Morning Prep</div>
