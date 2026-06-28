@@ -902,14 +902,14 @@
 
     <!-- TRADINGVIEW LIVE CHART -->
     <div style="background:var(--bg2);border:1px solid rgba(0,212,255,0.55);border-radius:6px;overflow:hidden;margin-bottom:10px;">
-      <div style="padding:6px 14px;border-bottom:1px solid rgba(0,212,255,0.35);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#00d4ff;">&#11041; LIVE CHART &middot; NQ/MNQ &middot; 3-MIN &middot; CME</div>
+      <div style="padding:6px 14px;border-bottom:1px solid rgba(0,212,255,0.35);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;color:#00d4ff;">&#11041; QQQ 3-MIN CANDLES &middot; VIX LINE &middot; FREE DATA</div>
       <div class="tradingview-widget-container" style="height:360px;">
         <div id="tv_chart_nq" style="height:360px;width:100%;"></div>
         <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
         <script type="text/javascript">
         new TradingView.widget({
           autosize: true,
-          symbol: "CME_MINI:NQ1!",
+          symbol: "NASDAQ:QQQ",
           interval: "3",
           timezone: "America/Chicago",
           theme: "dark",
@@ -921,7 +921,18 @@
           save_image: false,
           container_id: "tv_chart_nq",
           backgroundColor: "rgba(6,8,16,1)",
-          gridColor: "rgba(0,212,255,0.06)"
+          gridColor: "rgba(0,212,255,0.06)",
+          studies: [
+            {
+              id: "Compare@tv-basicstudies",
+              inputs: { symbol: "CBOE:VIX" },
+              override: {
+                "plot.color": "#ff3b5c",
+                "plot.linewidth": 2,
+                "plot.plottype": "line"
+              }
+            }
+          ]
         });
         </script>
       </div>
