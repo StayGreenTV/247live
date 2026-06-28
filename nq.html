@@ -922,17 +922,7 @@
           container_id: "tv_chart_nq",
           backgroundColor: "rgba(6,8,16,1)",
           gridColor: "rgba(0,212,255,0.06)",
-          studies: [
-            {
-              id: "Compare@tv-basicstudies",
-              inputs: { symbol: "CBOE:VIX" },
-              override: {
-                "plot.color": "#ff3b5c",
-                "plot.linewidth": 2,
-                "plot.plottype": "line"
-              }
-            }
-          ]
+          studies: ["RSI@tv-basicstudies", "MASimple@tv-scriptstd"]
         });
         </script>
       </div>
