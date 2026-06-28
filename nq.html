@@ -993,7 +993,7 @@
           <script type="text/javascript">
           new TradingView.widget({
             autosize: true,
-            symbol: "CBOE:VIX",
+            symbol: "AMEX:UVXY",
             interval: "D",
             timezone: "America/Chicago",
             theme: "dark",
@@ -1006,7 +1006,8 @@
             allow_symbol_change: false,
             container_id: "tv_chart_vix",
             backgroundColor: "rgba(6,8,16,1)",
-            gridColor: "rgba(255,59,92,0.06)"
+            gridColor: "rgba(255,59,92,0.06)",
+            color: "#ff3b5c"
           });
           </script>
         </div>
@@ -1513,6 +1514,65 @@ buildTape();
 render('NQ');
 buildMag10();
 setInterval(tickClock, 1000);
+
+// ── VIX FEAR STOPLIGHT ─────────────────────────────────────────
+var vixValue = 18.4; // default until bridge fires
+
+function updateStoplight(vix) {
+  var val = document.getElementById('vixValue');
+  if (val) val.textContent = vix.toFixed(2);
+
+  var lights = {
+    green:  document.getElementById('light-green'),
+    yellow: document.getElementById('light-yellow'),
+    orange: document.getElementById('light-orange'),
+    red:    document.getElementById('light-red')
+  };
+
+  // Reset all
+  Object.values(lights).forEach(function(l) {
+    if (l) {
+      l.style.boxShadow = 'none';
+      l.style.opacity = '0.25';
+    }
+  });
+
+  // Light up active
+  var active, color, shadow;
+  if (vix < 15) {
+    active = lights.green; color = '0,255,148'; 
+  } else if (vix < 20) {
+    active = lights.yellow; color = '255,230,0';
+  } else if (vix < 30) {
+    active = lights.orange; color = '255,140,0';
+  } else {
+    active = lights.red; color = '255,59,92';
+  }
+
+  if (active) {
+    active.style.opacity = '1';
+    active.style.boxShadow = '0 0 20px rgba(' + color + ',0.8), 0 0 40px rgba(' + color + ',0.4)';
+    active.style.background = 'rgba(' + color + ',0.6)';
+    active.style.border = '2px solid rgba(' + color + ',0.9)';
+  }
+}
+
+// Init with default
+updateStoplight(vixValue);
+
+// Check bridge for real VIX data
+setInterval(function() {
+  fetch('http://137.220.56.135/tv-data')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      if (d && d.VIX && d.VIX.close) {
+        vixValue = parseFloat(d.VIX.close);
+        updateStoplight(vixValue);
+      }
+    })
+    .catch(function() {});
+}, 30000);
+
 setInterval(() => {
   buildTape();
 }, 45000);
