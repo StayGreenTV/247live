@@ -22,10 +22,10 @@
     --bear:      #ff3b5c;
     --amber:     #ffb800;
     --text:      #c8d8f0;
-    --text-dim:  rgba(200,216,240,0.90);
+    --text-dim:  rgba(220,230,248,1.0);
     --text-faint:rgba(200,216,240,0.2);
-    --border:    rgba(0,212,255,0.55);
-    --border-hi: rgba(0,212,255,0.55);
+    --border:    rgba(0,212,255,0.75);
+    --border-hi: rgba(0,212,255,0.75);
   }
 
   html, body {
@@ -78,7 +78,7 @@
     color: var(--cyan);
     text-transform: uppercase;
   }
-  .logo span { color: rgba(0,212,255,0.85); }
+  .logo span { color: rgba(0,212,255,1.0); }
   .vsep { width: 1px; height: 22px; background: var(--border-hi); }
   .ticker-lbl {
     font-family: 'Orbitron', sans-serif;
@@ -427,7 +427,7 @@
   .top-nav-link{
     font-family:'JetBrains Mono',monospace;
     font-size:10px;letter-spacing:0.1em;
-    color:rgba(200,216,240,0.90);text-decoration:none;
+    color:rgba(220,230,248,1.0);text-decoration:none;
     padding:6px 12px;border-radius:3px;
     border:1px solid transparent;
     transition:all 0.15s;white-space:nowrap;
@@ -495,7 +495,7 @@
   }
   .sg-card-sub {
     font-size: 10px;
-    color: rgba(200,216,240,0.90);
+    color: rgba(220,230,248,1.0);
     margin-bottom: 14px;
     line-height: 1.6;
   }
@@ -516,7 +516,7 @@
     cursor: pointer;
     transition: all 0.15s;
     font-size: 11px;
-    color: rgba(200,216,240,0.95);
+    color: rgba(220,230,248,1.0);
   }
   .sg-opt:hover {
     background: rgba(0,255,148,0.1);
@@ -549,7 +549,7 @@
     display: block;
     text-align: center;
     font-size: 10px;
-    color: rgba(0,212,255,0.92);
+    color: rgba(0,212,255,1.0);
     text-decoration: none;
     letter-spacing: 0.06em;
   }
@@ -560,7 +560,7 @@
     right: 14px;
     background: none;
     border: none;
-    color: rgba(200,216,240,0.75);
+    color: rgba(220,230,248,0.92);
     font-size: 16px;
     cursor: pointer;
     line-height: 1;
@@ -579,7 +579,7 @@
   }
   .sg-thanks-sub {
     font-size: 10px;
-    color: rgba(200,216,240,0.90);
+    color: rgba(220,230,248,1.0);
     line-height: 1.6;
   }
 
@@ -588,10 +588,10 @@
   .chat-widget{position:fixed;bottom:24px;left:24px;z-index:9990;font-family:'JetBrains Mono',monospace;}
   .chat-bubble{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#00ff94);
     border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-    font-size:22px;box-shadow:0 0 20px rgba(0,212,255,0.85);transition:all 0.2s;}
-  .chat-bubble:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(0,212,255,0.92);}
+    font-size:22px;box-shadow:0 0 20px rgba(0,212,255,1.0);transition:all 0.2s;}
+  .chat-bubble:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(0,212,255,1.0);}
   .chat-box{position:absolute;bottom:64px;left:0;width:320px;
-    background:#0a1628;border:1px solid rgba(0,212,255,0.55);
+    background:#0a1628;border:1px solid rgba(0,212,255,0.75);
     border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,0.5);
     display:none;flex-direction:column;overflow:hidden;}
   .chat-box.open{display:flex;}
@@ -604,7 +604,7 @@
     display:flex;align-items:center;justify-content:center;font-size:14px;}
   .chat-hdr-name{font-size:12px;font-weight:700;color:#fff;letter-spacing:0.06em;}
   .chat-hdr-sub{font-size:9px;color:var(--bull);margin-top:1px;}
-  .chat-close{background:none;border:none;color:rgba(200,216,240,0.80);
+  .chat-close{background:none;border:none;color:rgba(220,230,248,0.95);
     font-size:16px;cursor:pointer;padding:0;}
   .chat-close:hover{color:#fff;}
   .chat-msgs{height:280px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;}
@@ -633,7 +633,7 @@
   .chat-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.2);
     border-radius:6px;padding:8px 10px;color:var(--text);font-family:'JetBrains Mono',monospace;
     font-size:11px;outline:none;}
-  .chat-input:focus{border-color:rgba(0,212,255,0.85);}
+  .chat-input:focus{border-color:rgba(0,212,255,1.0);}
   .chat-input::placeholder{color:var(--faint);}
   .chat-send{background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);
     color:var(--cyan);border-radius:6px;padding:8px 12px;cursor:pointer;
@@ -1047,7 +1047,7 @@ function buildChart(fc) {
         legend: { display: false },
         tooltip: {
           backgroundColor: '#0d1e38',
-          borderColor: 'rgba(0,212,255,0.55)',
+          borderColor: 'rgba(0,212,255,0.75)',
           borderWidth: 1,
           titleColor: '#00d4ff',
           bodyColor: '#c8d8f0',
@@ -1065,14 +1065,14 @@ function buildChart(fc) {
       scales: {
         x: {
           grid: { color: 'rgba(0,212,255,0.06)', lineWidth: 1 },
-          ticks: { color: 'rgba(0,212,255,0.90)', font: { family:'JetBrains Mono', size:10 }, maxRotation: 0 }
+          ticks: { color: 'rgba(0,212,255,1.0)', font: { family:'JetBrains Mono', size:10 }, maxRotation: 0 }
         },
         y: {
           position: 'right',
           min: yMin, max: yMax,
           grid: { color: 'rgba(0,212,255,0.06)', lineWidth: 1 },
           ticks: {
-            color: 'rgba(0,212,255,0.90)',
+            color: 'rgba(0,212,255,1.0)',
             font: { family:'JetBrains Mono', size:10 },
             callback: v => {
               const dec = SYMBOLS[currentSymbol].decimals || 2;

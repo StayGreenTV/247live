@@ -10,8 +10,8 @@
 :root{
   --bg:#060810;--bg2:#0a1628;--bg3:#080f1e;
   --cyan:#00d4ff;--bull:#00ff94;--bear:#ff3b5c;--amber:#ffb800;--purple:#a855f7;
-  --text:#c8d8f0;--dim:rgba(200,216,240,0.80);--faint:rgba(200,216,240,0.2);
-  --border:rgba(0,212,255,0.30);--border-hi:rgba(0,212,255,0.55);
+  --text:#c8d8f0;--dim:rgba(220,230,248,0.95);--faint:rgba(200,216,240,0.2);
+  --border:rgba(0,212,255,0.30);--border-hi:rgba(0,212,255,0.75);
 }
 html,body{background:var(--bg);color:var(--text);font-family:'JetBrains Mono',monospace;min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9999;}
@@ -164,7 +164,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
   .top-nav-link{
     font-family:'JetBrains Mono',monospace;
     font-size:10px;letter-spacing:0.1em;
-    color:rgba(200,216,240,0.90);text-decoration:none;
+    color:rgba(220,230,248,1.0);text-decoration:none;
     padding:6px 12px;border-radius:3px;
     border:1px solid transparent;
     transition:all 0.15s;white-space:nowrap;
@@ -318,7 +318,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
   }
   .sg-card-sub {
     font-size: 10px;
-    color: rgba(200,216,240,0.90);
+    color: rgba(220,230,248,1.0);
     margin-bottom: 14px;
     line-height: 1.6;
   }
@@ -339,7 +339,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     cursor: pointer;
     transition: all 0.15s;
     font-size: 11px;
-    color: rgba(200,216,240,0.95);
+    color: rgba(220,230,248,1.0);
   }
   .sg-opt:hover {
     background: rgba(0,255,148,0.1);
@@ -372,7 +372,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     display: block;
     text-align: center;
     font-size: 10px;
-    color: rgba(0,212,255,0.92);
+    color: rgba(0,212,255,1.0);
     text-decoration: none;
     letter-spacing: 0.06em;
   }
@@ -383,7 +383,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     right: 14px;
     background: none;
     border: none;
-    color: rgba(200,216,240,0.75);
+    color: rgba(220,230,248,0.92);
     font-size: 16px;
     cursor: pointer;
     line-height: 1;
@@ -402,7 +402,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
   }
   .sg-thanks-sub {
     font-size: 10px;
-    color: rgba(200,216,240,0.90);
+    color: rgba(220,230,248,1.0);
     line-height: 1.6;
   }
 
@@ -411,10 +411,10 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
   .chat-widget{position:fixed;bottom:24px;left:24px;z-index:9990;font-family:'JetBrains Mono',monospace;}
   .chat-bubble{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#00d4ff,#00ff94);
     border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-    font-size:22px;box-shadow:0 0 20px rgba(0,212,255,0.85);transition:all 0.2s;}
-  .chat-bubble:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(0,212,255,0.92);}
+    font-size:22px;box-shadow:0 0 20px rgba(0,212,255,1.0);transition:all 0.2s;}
+  .chat-bubble:hover{transform:scale(1.1);box-shadow:0 0 30px rgba(0,212,255,1.0);}
   .chat-box{position:absolute;bottom:64px;left:0;width:320px;
-    background:#0a1628;border:1px solid rgba(0,212,255,0.55);
+    background:#0a1628;border:1px solid rgba(0,212,255,0.75);
     border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,0.5);
     display:none;flex-direction:column;overflow:hidden;}
   .chat-box.open{display:flex;}
@@ -427,7 +427,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
     display:flex;align-items:center;justify-content:center;font-size:14px;}
   .chat-hdr-name{font-size:12px;font-weight:700;color:#fff;letter-spacing:0.06em;}
   .chat-hdr-sub{font-size:9px;color:var(--bull);margin-top:1px;}
-  .chat-close{background:none;border:none;color:rgba(200,216,240,0.80);
+  .chat-close{background:none;border:none;color:rgba(220,230,248,0.95);
     font-size:16px;cursor:pointer;padding:0;}
   .chat-close:hover{color:#fff;}
   .chat-msgs{height:280px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;}
@@ -456,7 +456,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
   .chat-input{flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(0,212,255,0.2);
     border-radius:6px;padding:8px 10px;color:var(--text);font-family:'JetBrains Mono',monospace;
     font-size:11px;outline:none;}
-  .chat-input:focus{border-color:rgba(0,212,255,0.85);}
+  .chat-input:focus{border-color:rgba(0,212,255,1.0);}
   .chat-input::placeholder{color:var(--faint);}
   .chat-send{background:rgba(0,212,255,0.12);border:1px solid rgba(0,212,255,0.3);
     color:var(--cyan);border-radius:6px;padding:8px 12px;cursor:pointer;
@@ -519,7 +519,7 @@ body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradi
       <button class="snav-btn"        id="btn-powerhour"  onclick="setSession('powerhour')">⬡ 3:00PM POWER HOUR <span class="pro-lock">PRO</span></button>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
-      <span id="proStatusBadge" style="font-size:10px;letter-spacing:0.1em;padding:4px 12px;border-radius:3px;background:rgba(200,216,240,0.06);color:rgba(200,216,240,0.80);border:1px solid rgba(200,216,240,0.15);">FREE TIER</span>
+      <span id="proStatusBadge" style="font-size:10px;letter-spacing:0.1em;padding:4px 12px;border-radius:3px;background:rgba(200,216,240,0.06);color:rgba(220,230,248,0.95);border:1px solid rgba(200,216,240,0.15);">FREE TIER</span>
       <a href="https://gumroad.com" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;padding:5px 14px;border-radius:3px;background:rgba(0,255,148,0.08);color:#00ff94;border:1px solid rgba(0,255,148,0.3);text-decoration:none;">UPGRADE $1/mo →</a>
     </div>
   </div>
