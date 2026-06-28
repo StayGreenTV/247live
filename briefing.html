@@ -865,7 +865,7 @@ async function generateBriefing() {
     //   RDP → node server.js → dashboard live at :3000
     //   node bridge.js → data bridge live at :3001
 
-    const VPS_ENDPOINT = 'http://137.220.56.135:3000/api/briefing';
+    const VPS_ENDPOINT = 'https://corsproxy.io/?http://137.220.56.135:3000/api/briefing';
     const USE_DEMO_MODE = false; // flip to false when VPS is running
 
     let text = '';
