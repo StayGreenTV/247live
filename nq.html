@@ -151,9 +151,9 @@
   /* ── MAIN BODY ── */
   .body-grid {
     display: grid;
-    grid-template-columns: 45% 35% 20%;
+    grid-template-columns: 50% 25% 25%;
     gap: 8px;
-    align-items: start;
+    align-items: stretch;
   }
 
   /* ── CHART PANEL ── */
@@ -919,8 +919,8 @@
       </div>
     </div>
 
-    <!-- COL 2 (35%): KEY LEVELS + BIAS + CONFLUENCE -->
-    <div style="display:flex;flex-direction:column;gap:8px;">
+    <!-- COL 2 (25%): KEY LEVELS + BIAS + CONFLUENCE -->
+    <div style="display:flex;flex-direction:column;gap:8px;height:100%;">
 
       <!-- DIRECTIONAL BIAS -->
       <div class="panel">
@@ -943,7 +943,7 @@
       </div>
 
       <!-- KEY LEVELS -->
-      <div class="panel" style="flex:1">
+      <div class="panel" style="flex:2">
         <div class="panel-title" style="color:#fff;letter-spacing:0.18em;">⬡ <span style="color:var(--bear)">R</span><span style="color:var(--amber)">E</span><span style="color:var(--bull)">S</span> <span style="color:#fff">·</span> <span style="color:var(--cyan)">KEY LEVELS</span> <span style="color:#fff">·</span> <span style="color:var(--bull)">S</span><span style="color:var(--amber)">U</span><span style="color:var(--bear)">P</span> ⬡</div>
         <div id="levelsPanel"></div>
       </div>
@@ -956,13 +956,13 @@
 
     </div>
 
-    <!-- COL 3 (20%): QQQ CHART + VIX -->
+    <!-- COL 3 (25%): QQQ CHART + VIX -->
     <div style="display:flex;flex-direction:column;gap:8px;">
 
       <div style="background:var(--bg2);border:1px solid rgba(0,212,255,0.55);border-radius:6px;overflow:hidden;">
         <div style="padding:5px 10px;border-bottom:1px solid rgba(0,212,255,0.35);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#00d4ff;">&#11041; QQQ · 3-MIN</div>
-        <div class="tradingview-widget-container" style="height:260px;">
-          <div id="tv_chart_qqq" style="height:260px;width:100%;"></div>
+        <div class="tradingview-widget-container" style="height:340px;">
+          <div id="tv_chart_qqq" style="height:340px;width:100%;"></div>
           <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
           <script type="text/javascript">
           new TradingView.widget({
@@ -988,8 +988,8 @@
 
       <div style="background:var(--bg2);border:1px solid rgba(255,59,92,0.4);border-radius:6px;overflow:hidden;">
         <div style="padding:5px 10px;border-bottom:1px solid rgba(255,59,92,0.25);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#ff3b5c;">&#11041; VIX · FEAR</div>
-        <div class="tradingview-widget-container" style="height:160px;">
-          <div id="tv_chart_vix" style="height:160px;width:100%;"></div>
+        <div class="tradingview-widget-container" style="height:200px;">
+          <div id="tv_chart_vix" style="height:200px;width:100%;"></div>
           <script type="text/javascript">
           new TradingView.widget({
             autosize: true,
