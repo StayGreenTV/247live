@@ -957,7 +957,7 @@
     </div>
 
     <!-- COL 3 (25%): QQQ CHART + VIX -->
-    <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="display:flex;flex-direction:column;gap:8px;height:100%;">
 
       <div style="background:var(--bg2);border:1px solid rgba(0,212,255,0.55);border-radius:6px;overflow:hidden;">
         <div style="padding:5px 10px;border-bottom:1px solid rgba(0,212,255,0.35);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#00d4ff;">&#11041; QQQ · 3-MIN</div>
@@ -986,10 +986,10 @@
         </div>
       </div>
 
-      <div style="background:var(--bg2);border:1px solid rgba(255,59,92,0.4);border-radius:6px;overflow:hidden;">
+      <div style="background:var(--bg2);border:1px solid rgba(255,59,92,0.4);border-radius:6px;overflow:hidden;flex:1;display:flex;flex-direction:column;">
         <div style="padding:5px 10px;border-bottom:1px solid rgba(255,59,92,0.25);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#ff3b5c;">&#11041; VIX · FEAR</div>
-        <div class="tradingview-widget-container" style="height:200px;">
-          <div id="tv_chart_vix" style="height:200px;width:100%;"></div>
+        <div class="tradingview-widget-container" style="flex:1;min-height:200px;">
+          <div id="tv_chart_vix" style="height:100%;min-height:200px;width:100%;"></div>
           <script type="text/javascript">
           new TradingView.widget({
             autosize: true,
