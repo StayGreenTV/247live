@@ -849,6 +849,8 @@
       <span class="ticker-lbl" id="tickerLbl">NQ / MNQ</span>
       <span class="price-display" id="priceDisplay">—</span>
       <span class="chg-badge chg-up" id="chgBadge">+0.00%</span>
+      <a href="http://137.220.56.135:3000/briefing.html" style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:#000;padding:6px 16px;background:#00ff94;border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">⬡ BRIEFING</a>
+      <a href="subscribe.html" style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:#00d4ff;padding:6px 16px;border:2px solid rgba(0,212,255,0.5);border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">SUBSCRIBE ✦</a>
     </div>
     <div class="hdr-right">
       <select class="symbol-selector" id="symbolSel" onchange="switchSymbol(this.value)">
@@ -915,7 +917,7 @@
           role="img"
           aria-label="Market Maestro NQ probability cloud showing intraday forecast zone">
         </canvas>
-        <div style="position:absolute;bottom:28px;left:10px;right:100px;font-size:9px;color:rgba(147,51,234,0.35);line-height:1.5;pointer-events:none;">
+        <div style="position:absolute;bottom:28px;left:10px;right:100px;font-size:11px;color:rgba(160,200,220,0.55);line-height:1.5;pointer-events:none;letter-spacing:0.05em;">
           Cloud shape is mathematical · ATR-derived levels · Not based on historical patterns · For entertainment only
         </div>
       </div>
@@ -995,8 +997,8 @@
         <div style="padding:5px 10px;border-bottom:1px solid rgba(0,212,255,0.25);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.1em;color:#00d4ff;">&#11041; VIX &middot; FEAR GAUGE</div>
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;padding:12px 8px;">
           <div style="text-align:center;margin-bottom:4px;">
-            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(220,230,248,0.7);">VIX</div>
-            <div style="font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:#fff;" id="vixValue">18.4</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:16px;color:rgba(220,230,248,0.9);letter-spacing:0.2em;font-weight:700;">VIX</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:36px;font-weight:700;color:#fff;line-height:1;" id="vixValue">18.4</div>
           </div>
           <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;padding:0 10px;">
             <div style="display:flex;align-items:center;justify-content:center;gap:12px;width:100%;">
@@ -1206,7 +1208,7 @@ function buildChart(fc) {
   for(let i=1;i<n;i++) ctx.lineTo(px(i/(n-1)), py(upper[i]*1.03 - center[i]*0.03));
   for(let i=n-1;i>=0;i--) ctx.lineTo(px(i/(n-1)), py(lower[i]*1.03 - center[i]*0.03));
   ctx.closePath();
-  ctx.fillStyle = 'rgba(88,28,135,0.05)';
+  ctx.fillStyle = 'rgba(88,28,135,0.03)';
   ctx.fill();
   ctx.restore();
 
@@ -1220,14 +1222,14 @@ function buildChart(fc) {
     ctx.lineTo(px((i+1)/(n-1)), py(lower[i+1]));
     ctx.lineTo(px(i/(n-1)), py(lower[i]));
     ctx.closePath();
-    ctx.fillStyle = isBull ? 'rgba(109,40,217,0.20)' : 'rgba(139,92,246,0.12)';
+    ctx.fillStyle = isBull ? 'rgba(124,58,237,0.28)' : 'rgba(167,139,250,0.12)';
     ctx.fill();
     ctx.restore();
   }
 
   // Cloud edges
   ctx.save();
-  ctx.strokeStyle = 'rgba(147,51,234,0.5)';
+  ctx.strokeStyle = 'rgba(167,139,250,0.75)';
   ctx.lineWidth = 1.5;
   ctx.shadowColor = 'rgba(147,51,234,0.3)';
   ctx.shadowBlur = 5;
@@ -1289,11 +1291,11 @@ function buildChart(fc) {
     ctx.stroke();
     ctx.setLineDash([]);
     ctx.fillStyle = lv.color;
-    ctx.font = '500 9px JetBrains Mono';
+    ctx.font = '600 12px JetBrains Mono';
     ctx.textAlign = 'left';
     ctx.fillText(lv.label, W-pad.r+9, y+3);
-    ctx.font = '400 8px JetBrains Mono';
-    ctx.fillStyle = 'rgba(167,139,250,0.5)';
+    ctx.font = '400 11px JetBrains Mono';
+    ctx.fillStyle = 'rgba(200,220,240,0.7)';
     ctx.fillText(Math.round(lv.p).toLocaleString(), W-pad.r+9, y+13);
     ctx.restore();
   });
@@ -1320,7 +1322,7 @@ function buildChart(fc) {
   ctx.fill();
   ctx.stroke();
   ctx.fillStyle = '#a78bfa';
-  ctx.font = '700 9px JetBrains Mono';
+  ctx.font = '700 13px JetBrains Mono';
   ctx.textAlign = 'center';
   ctx.shadowBlur = 0;
   ctx.fillText(base.toLocaleString(), pxNow, pyNow-10);
@@ -1329,7 +1331,7 @@ function buildChart(fc) {
   // Time labels
   const times = ['OPEN','10AM','11AM','12PM','1PM','2PM','3PM','CLOSE'];
   ctx.fillStyle = 'rgba(167,139,250,0.3)';
-  ctx.font = '8px JetBrains Mono';
+  ctx.font = '11px JetBrains Mono';
   ctx.textAlign = 'center';
   times.forEach((l,i) => ctx.fillText(l, px(i/7), H-6));
 
