@@ -64,13 +64,14 @@
 
   /* ── HEADER ── */
   .hdr {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    justify-content: space-between;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--border-hi);
   }
   .hdr-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  #centerBtns { justify-self: center; }
   .logo {
     font-family: 'Orbitron', sans-serif;
     font-size: 15px; font-weight: 700;
@@ -849,10 +850,10 @@
       <span class="ticker-lbl" id="tickerLbl">NQ / MNQ</span>
       <span class="price-display" id="priceDisplay">—</span>
       <span class="chg-badge chg-up" id="chgBadge">+0.00%</span>
-      <div style="display:flex;gap:8px;align-items:center;margin:0 auto;">
+      <div id="centerBtns" style="display:flex;gap:8px;align-items:center;">
         <a href="http://137.220.56.135:3000/briefing.html" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#000;padding:6px 14px;background:#00ff94;border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">⬡ BRIEFING</a>
         <a href="subscribe.html" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#00d4ff;padding:6px 14px;border:2px solid rgba(0,212,255,0.5);border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">SUBSCRIBE ✦</a>
-        <button onclick="POTUSAlert.test(1)" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#ff3b5c;padding:6px 14px;border:2px solid rgba(255,59,92,0.5);border-radius:4px;background:rgba(255,59,92,0.08);cursor:pointer;letter-spacing:0.08em;white-space:nowrap;">🇺🇸 POTUS</button>
+        <button onclick="POTUSAlert.test(1)" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#ff3b5c;padding:6px 14px;border:2px solid rgba(255,59,92,0.5);border-radius:4px;background:rgba(255,59,92,0.08);cursor:pointer;letter-spacing:0.08em;white-space:nowrap;">🇺🇸 POTUS · PRO</button>
       </div>
     </div>
     <div class="hdr-right">
@@ -1151,10 +1152,8 @@ function buildChart(fc) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
-  // Maestro cloud draws on canvas directly - no Chart.js needed
   window._chartLevels = buildLevels(base, atr);
   window._chartPrice = base;
-  return;
 
   const base = fc.base_c[0];
   const atr = SYMBOLS[currentSymbol].atr;
@@ -1178,9 +1177,9 @@ function buildChart(fc) {
   const levels = [
     { p: base + atr*1.2,  label:'PDH',  color:'rgba(167,139,250,0.75)', dash:[6,3], w:1.5 },
     { p: base + atr*0.85, label:'R1',   color:'rgba(255,59,92,0.8)',    dash:[4,3], w:1.5 },
-    { p: base + atr*0.38, label:'GEX',  color:'rgba(16,185,129,0.8)',   dash:[7,3], w:1.5 },
-    { p: base + atr*0.12, label:'LIQZ', color:'rgba(249,115,22,0.65)',  dash:[3,3], w:1   },
-    { p: base - atr*0.18, label:'LIQZ', color:'rgba(249,115,22,0.55)',  dash:[3,3], w:1   },
+    { p: base + atr*0.38, label:'VOL ZONE',  color:'rgba(16,185,129,0.8)',   dash:[7,3], w:1.5 },
+    { p: base + atr*0.12, label:'KEY ZONE', color:'rgba(249,115,22,0.65)',  dash:[3,3], w:1   },
+    { p: base - atr*0.18, label:'KEY ZONE', color:'rgba(249,115,22,0.55)',  dash:[3,3], w:1   },
     { p: base - atr*0.5,  label:'S1',   color:'rgba(0,255,148,0.8)',    dash:[4,3], w:1.5 },
     { p: base - atr*1.1,  label:'PDL',  color:'rgba(109,40,217,0.75)',  dash:[6,3], w:1.5 },
   ];
@@ -1200,7 +1199,11 @@ function buildChart(fc) {
     const breathe = Math.sin(t * Math.PI * 3.5) * atr * 0.15;
     const breathe2 = Math.sin(t * Math.PI * 6 + 1.2) * atr * 0.07;
     const finalSpread = Math.max(atr*0.04, spread + breathe + breathe2);
-    const c = base + (base * 0.003) * t * t + Math.sin(t * Math.PI * 2.2) * atr * 0.08 * (1-t);
+    const trend = base + (base * 0.002) * t * t;
+    const wave1 = Math.sin(t * Math.PI * 2.8 + 0.3) * atr * 0.12 * (1 - t * 0.4);
+    const wave2 = Math.sin(t * Math.PI * 5.1 + 1.1) * atr * 0.06 * t;
+    const wave3 = Math.sin(t * Math.PI * 1.3) * atr * 0.08;
+    const c = trend + wave1 + wave2 + wave3;
     center.push(c);
     upper.push(c + finalSpread);
     lower.push(c - finalSpread);
@@ -1383,10 +1386,8 @@ function computeBias() {
 function buildChart(fc) {
   const ctx = document.getElementById('forecastChart').getContext('2d');
   if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
-  // Maestro cloud draws on canvas directly - no Chart.js needed
   window._chartLevels = buildLevels(base, atr);
   window._chartPrice = base;
-  return;
 
   const yMin = Math.min(...fc.lo2) - (Math.max(...fc.hi2) - Math.min(...fc.lo2)) * 0.08;
   const yMax = Math.max(...fc.hi2) + (Math.max(...fc.hi2) - Math.min(...fc.lo2)) * 0.08;
@@ -1768,9 +1769,9 @@ function updateStoplight(vix) {
 
   if (active) {
     active.style.opacity = '1';
-    active.style.boxShadow = '0 0 20px rgba(' + color + ',0.8), 0 0 40px rgba(' + color + ',0.4)';
-    active.style.background = 'rgba(' + color + ',0.6)';
-    active.style.border = '2px solid rgba(' + color + ',0.9)';
+    active.style.boxShadow = '0 0 25px rgba(' + color + ',1.0), 0 0 50px rgba(' + color + ',0.6), 0 0 80px rgba(' + color + ',0.3)';
+    active.style.background = 'rgba(' + color + ',0.75)';
+    active.style.border = '3px solid rgba(' + color + ',1.0)';
   }
 }
 
