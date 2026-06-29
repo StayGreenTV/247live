@@ -1152,11 +1152,10 @@ function buildChart(fc) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
-  window._chartLevels = buildLevels(base, atr);
-  window._chartPrice = base;
-
   const base = fc.base_c[0];
   const atr = SYMBOLS[currentSymbol].atr;
+  window._chartLevels = buildLevels(base, atr);
+  window._chartPrice = base;
   const n = 80;
 
   // Get session progress
