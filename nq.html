@@ -849,8 +849,11 @@
       <span class="ticker-lbl" id="tickerLbl">NQ / MNQ</span>
       <span class="price-display" id="priceDisplay">—</span>
       <span class="chg-badge chg-up" id="chgBadge">+0.00%</span>
-      <a href="http://137.220.56.135:3000/briefing.html" style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:#000;padding:6px 16px;background:#00ff94;border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">⬡ BRIEFING</a>
-      <a href="subscribe.html" style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:#00d4ff;padding:6px 16px;border:2px solid rgba(0,212,255,0.5);border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">SUBSCRIBE ✦</a>
+      <div style="display:flex;gap:8px;align-items:center;margin:0 auto;">
+        <a href="http://137.220.56.135:3000/briefing.html" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#000;padding:6px 14px;background:#00ff94;border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">⬡ BRIEFING</a>
+        <a href="subscribe.html" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#00d4ff;padding:6px 14px;border:2px solid rgba(0,212,255,0.5);border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">SUBSCRIBE ✦</a>
+        <button onclick="POTUSAlert.test(1)" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#ff3b5c;padding:6px 14px;border:2px solid rgba(255,59,92,0.5);border-radius:4px;background:rgba(255,59,92,0.08);cursor:pointer;letter-spacing:0.08em;white-space:nowrap;">🇺🇸 POTUS</button>
+      </div>
     </div>
     <div class="hdr-right">
       <select class="symbol-selector" id="symbolSel" onchange="switchSymbol(this.value)">
@@ -1148,6 +1151,10 @@ function buildChart(fc) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+  // Maestro cloud draws on canvas directly - no Chart.js needed
+  window._chartLevels = buildLevels(base, atr);
+  window._chartPrice = base;
+  return;
 
   const base = fc.base_c[0];
   const atr = SYMBOLS[currentSymbol].atr;
@@ -1163,7 +1170,7 @@ function buildChart(fc) {
 
   const W = canvas.width;
   const H = canvas.height;
-  const pad = { l:10, r:90, t:16, b:28 };
+  const pad = { l:10, r:110, t:16, b:32 };
   const cW = W - pad.l - pad.r;
   const cH = H - pad.t - pad.b;
 
@@ -1329,7 +1336,7 @@ function buildChart(fc) {
   ctx.restore();
 
   // Time labels
-  const times = ['OPEN','10AM','11AM','12PM','1PM','2PM','3PM','CLOSE'];
+  const times = ['OPEN','9:30','10AM','10:30','11AM','12PM','1PM','2PM'];
   ctx.fillStyle = 'rgba(167,139,250,0.3)';
   ctx.font = '11px JetBrains Mono';
   ctx.textAlign = 'center';
@@ -1376,6 +1383,10 @@ function computeBias() {
 function buildChart(fc) {
   const ctx = document.getElementById('forecastChart').getContext('2d');
   if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+  // Maestro cloud draws on canvas directly - no Chart.js needed
+  window._chartLevels = buildLevels(base, atr);
+  window._chartPrice = base;
+  return;
 
   const yMin = Math.min(...fc.lo2) - (Math.max(...fc.hi2) - Math.min(...fc.lo2)) * 0.08;
   const yMax = Math.max(...fc.hi2) + (Math.max(...fc.hi2) - Math.min(...fc.lo2)) * 0.08;
