@@ -1166,6 +1166,10 @@ function buildChart(fc) {
   const elapsed = Math.max(0, Math.min(totalMins, (now - start) / 60000));
   const progress = elapsed / totalMins;
 
+  // Set canvas dimensions explicitly
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width > 100 ? rect.width : 700;
+  canvas.height = 480;
   const W = canvas.width;
   const H = canvas.height;
   const pad = { l:10, r:110, t:16, b:32 };
@@ -1483,7 +1487,7 @@ function render(sym) {
   window._chartDec    = cfg.decimals||2;
 
   // Chart
-  buildChart(fc);
+  setTimeout(function(){ buildChart(fc); }, 100);
 }
 
 // ── SYMBOL SWITCH ──────────────────────────────────────────────
