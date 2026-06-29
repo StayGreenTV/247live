@@ -903,19 +903,21 @@
     <!-- COL 1 (45%): NQ FORECAST CONE -->
     <div class="chart-panel">
       <div class="chart-hdr">
-        <span class="chart-title">&#11041; NQ Probability Forecast Cone</span>
+        <span class="chart-title">🎩 MARKET MAESTRO &middot; PROBABILITY CLOUD</span>
         <div class="legend">
-          <span class="leg-item"><span class="leg-dot" style="background:rgba(0,255,148,0.55)"></span>Bull</span>
-          <span class="leg-item"><span class="leg-dot" style="background:#00d4ff"></span>Base</span>
-          <span class="leg-item"><span class="leg-dot" style="background:rgba(255,59,92,0.55)"></span>Bear</span>
-          <span class="leg-item"><span class="leg-dot" style="background:rgba(0,212,255,0.18)"></span>68%</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#f59e0b"></span>Maestro</span>
+          <span class="leg-item"><span class="leg-dot" style="background:rgba(147,51,234,0.6)"></span>Cloud</span>
+          <span class="leg-item" style="color:rgba(167,139,250,0.5);font-size:9px;">STREAK <span id="maestroStreak" style="color:#f59e0b;font-weight:700;">—</span></span>
         </div>
       </div>
-      <div class="chart-canvas-wrap">
+      <div class="chart-canvas-wrap" style="position:relative;">
         <canvas id="forecastChart"
           role="img"
-          aria-label="NQ futures probability forecast cone showing bull, base case, and bear price zones">
+          aria-label="Market Maestro NQ probability cloud showing intraday forecast zone">
         </canvas>
+        <div style="position:absolute;bottom:28px;left:10px;right:100px;font-size:9px;color:rgba(147,51,234,0.35);line-height:1.5;pointer-events:none;">
+          Cloud shape is mathematical · ATR-derived levels · Not based on historical patterns · For entertainment only
+        </div>
       </div>
     </div>
 
@@ -1117,24 +1119,222 @@ function buildTape() {
 }
 
 // ── FORECAST ENGINE ────────────────────────────────────────────
+// ── MARKET MAESTRO CLOUD ───────────────────────────────────────
 function buildForecast(base, atr) {
-  const labels = ['NOW','1H','2H','4H','EOD','D+1','D+2','D+3','D+4'];
-  const drift = 0.00035;
-  const volFactor = atr / base;
+  // Keep legacy data structure for compatibility
+  const labels = ['OPEN','10AM','11AM','12PM','1PM','2PM','3PM','CLOSE'];
+  const n = 8;
   const base_c=[], bull=[], bear=[], hi1=[], lo1=[], hi2=[], lo2=[];
-  for (let i = 0; i <= 8; i++) {
-    const t = i;
-    const mu = base * (1 + drift * t);
-    const sigma = base * volFactor * Math.sqrt(t + 0.25);
-    base_c.push(+mu.toFixed(2));
-    bull.push(+(mu + sigma * 1.28).toFixed(2));
-    bear.push(+(mu - sigma * 1.28).toFixed(2));
-    hi1.push(+(mu + sigma * 0.67).toFixed(2));
-    lo1.push(+(mu - sigma * 0.67).toFixed(2));
-    hi2.push(+(mu + sigma * 1.96).toFixed(2));
-    lo2.push(+(mu - sigma * 1.96).toFixed(2));
+  for (let i = 0; i <= n-1; i++) {
+    const t = i/(n-1);
+    const spread = atr * (0.05 + t * 0.95);
+    const breathe = Math.sin(t * Math.PI * 3.5) * atr * 0.15;
+    const c = base + (base * 0.003) * t * t;
+    base_c.push(+c.toFixed(2));
+    bull.push(+(c + spread + breathe).toFixed(2));
+    bear.push(+(c - spread - breathe).toFixed(2));
+    hi1.push(+(c + spread*0.5).toFixed(2));
+    lo1.push(+(c - spread*0.5).toFixed(2));
+    hi2.push(+(c + spread*1.2).toFixed(2));
+    lo2.push(+(c - spread*1.2).toFixed(2));
   }
   return { labels, base_c, bull, bear, hi1, lo1, hi2, lo2 };
+}
+
+function buildChart(fc) {
+  const canvas = document.getElementById('forecastChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+
+  const base = fc.base_c[0];
+  const atr = SYMBOLS[currentSymbol].atr;
+  const n = 80;
+
+  // Get session progress
+  const now = new Date();
+  const start = new Date(now); start.setHours(8,30,0,0);
+  const end = new Date(now); end.setHours(15,0,0,0);
+  const totalMins = (end - start) / 60000;
+  const elapsed = Math.max(0, Math.min(totalMins, (now - start) / 60000));
+  const progress = elapsed / totalMins;
+
+  const W = canvas.width;
+  const H = canvas.height;
+  const pad = { l:10, r:90, t:16, b:28 };
+  const cW = W - pad.l - pad.r;
+  const cH = H - pad.t - pad.b;
+
+  // Key levels for display
+  const levels = [
+    { p: base + atr*1.2,  label:'PDH',  color:'rgba(167,139,250,0.75)', dash:[6,3], w:1.5 },
+    { p: base + atr*0.85, label:'R1',   color:'rgba(255,59,92,0.8)',    dash:[4,3], w:1.5 },
+    { p: base + atr*0.38, label:'GEX',  color:'rgba(16,185,129,0.8)',   dash:[7,3], w:1.5 },
+    { p: base + atr*0.12, label:'LIQZ', color:'rgba(249,115,22,0.65)',  dash:[3,3], w:1   },
+    { p: base - atr*0.18, label:'LIQZ', color:'rgba(249,115,22,0.55)',  dash:[3,3], w:1   },
+    { p: base - atr*0.5,  label:'S1',   color:'rgba(0,255,148,0.8)',    dash:[4,3], w:1.5 },
+    { p: base - atr*1.1,  label:'PDL',  color:'rgba(109,40,217,0.75)',  dash:[6,3], w:1.5 },
+  ];
+
+  const allP = levels.map(l=>l.p).concat([base+atr*1.4, base-atr*1.3]);
+  const minP = Math.min(...allP) - 60;
+  const maxP = Math.max(...allP) + 60;
+
+  function px(t) { return pad.l + t * cW; }
+  function py(p) { return pad.t + (1-(p-minP)/(maxP-minP)) * cH; }
+
+  // Generate organic Gaussian cloud
+  const upper=[], lower=[], center=[];
+  for(let i=0;i<n;i++){
+    const t = i/(n-1);
+    const spread = atr * (0.04 + t * 0.96);
+    const breathe = Math.sin(t * Math.PI * 3.5) * atr * 0.15;
+    const breathe2 = Math.sin(t * Math.PI * 6 + 1.2) * atr * 0.07;
+    const finalSpread = Math.max(atr*0.04, spread + breathe + breathe2);
+    const c = base + (base * 0.003) * t * t + Math.sin(t * Math.PI * 2.2) * atr * 0.08 * (1-t);
+    center.push(c);
+    upper.push(c + finalSpread);
+    lower.push(c - finalSpread);
+  }
+
+  ctx.clearRect(0,0,W,H);
+
+  // Outer glow
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(px(0), py(upper[0]));
+  for(let i=1;i<n;i++) ctx.lineTo(px(i/(n-1)), py(upper[i]*1.03 - center[i]*0.03));
+  for(let i=n-1;i>=0;i--) ctx.lineTo(px(i/(n-1)), py(lower[i]*1.03 - center[i]*0.03));
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(88,28,135,0.05)';
+  ctx.fill();
+  ctx.restore();
+
+  // Cloud body segments
+  for(let i=0;i<n-1;i++){
+    const isBull = center[i+1] >= center[i];
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(px(i/(n-1)), py(upper[i]));
+    ctx.lineTo(px((i+1)/(n-1)), py(upper[i+1]));
+    ctx.lineTo(px((i+1)/(n-1)), py(lower[i+1]));
+    ctx.lineTo(px(i/(n-1)), py(lower[i]));
+    ctx.closePath();
+    ctx.fillStyle = isBull ? 'rgba(109,40,217,0.20)' : 'rgba(139,92,246,0.12)';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Cloud edges
+  ctx.save();
+  ctx.strokeStyle = 'rgba(147,51,234,0.5)';
+  ctx.lineWidth = 1.5;
+  ctx.shadowColor = 'rgba(147,51,234,0.3)';
+  ctx.shadowBlur = 5;
+  ctx.beginPath();
+  for(let i=0;i<n;i++){
+    i===0 ? ctx.moveTo(px(0),py(upper[0])) : ctx.lineTo(px(i/(n-1)),py(upper[i]));
+  }
+  ctx.stroke();
+  ctx.beginPath();
+  for(let i=0;i<n;i++){
+    i===0 ? ctx.moveTo(px(0),py(lower[0])) : ctx.lineTo(px(i/(n-1)),py(lower[i]));
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // Elapsed shading
+  if(progress > 0.01){
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(px(0), py(upper[0]));
+    for(let i=1;i<n;i++){
+      if(i/(n-1) > progress) break;
+      ctx.lineTo(px(i/(n-1)), py(upper[i]));
+    }
+    ctx.lineTo(px(progress), py(lower[Math.floor(progress*(n-1))]));
+    for(let i=Math.floor(progress*(n-1));i>=0;i--){
+      ctx.lineTo(px(i/(n-1)), py(lower[i]));
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(147,51,234,0.07)';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // Gold Maestro line
+  ctx.save();
+  ctx.strokeStyle = '#f59e0b';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = 'rgba(245,158,11,0.5)';
+  ctx.shadowBlur = 6;
+  ctx.beginPath();
+  for(let i=0;i<n;i++){
+    i===0 ? ctx.moveTo(px(0),py(center[0])) : ctx.lineTo(px(i/(n-1)),py(center[i]));
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // Horizontal key levels
+  levels.forEach(lv => {
+    const y = py(lv.p);
+    if(y < pad.t || y > H-pad.b) return;
+    ctx.save();
+    ctx.setLineDash(lv.dash);
+    ctx.strokeStyle = lv.color;
+    ctx.lineWidth = lv.w;
+    ctx.beginPath();
+    ctx.moveTo(pad.l, y);
+    ctx.lineTo(W - pad.r + 6, y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = lv.color;
+    ctx.font = '500 9px JetBrains Mono';
+    ctx.textAlign = 'left';
+    ctx.fillText(lv.label, W-pad.r+9, y+3);
+    ctx.font = '400 8px JetBrains Mono';
+    ctx.fillStyle = 'rgba(167,139,250,0.5)';
+    ctx.fillText(Math.round(lv.p).toLocaleString(), W-pad.r+9, y+13);
+    ctx.restore();
+  });
+
+  // Current price dot
+  const pxNow = px(progress);
+  const pyNow = py(base);
+  ctx.save();
+  ctx.setLineDash([2,4]);
+  ctx.strokeStyle = 'rgba(167,139,250,0.25)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(pxNow, pad.t);
+  ctx.lineTo(pxNow, H-pad.b);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#a78bfa';
+  ctx.strokeStyle = '#060810';
+  ctx.lineWidth = 2;
+  ctx.shadowColor = 'rgba(167,139,250,0.8)';
+  ctx.shadowBlur = 10;
+  ctx.beginPath();
+  ctx.arc(pxNow, pyNow, 6, 0, Math.PI*2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#a78bfa';
+  ctx.font = '700 9px JetBrains Mono';
+  ctx.textAlign = 'center';
+  ctx.shadowBlur = 0;
+  ctx.fillText(base.toLocaleString(), pxNow, pyNow-10);
+  ctx.restore();
+
+  // Time labels
+  const times = ['OPEN','10AM','11AM','12PM','1PM','2PM','3PM','CLOSE'];
+  ctx.fillStyle = 'rgba(167,139,250,0.3)';
+  ctx.font = '8px JetBrains Mono';
+  ctx.textAlign = 'center';
+  times.forEach((l,i) => ctx.fillText(l, px(i/7), H-6));
+
+  // Streak
+  document.getElementById('maestroStreak') && (document.getElementById('maestroStreak').textContent = '7🔥');
 }
 
 // ── KEY LEVELS ─────────────────────────────────────────────────
