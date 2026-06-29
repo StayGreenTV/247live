@@ -151,6 +151,29 @@ body{background:#060810;color:#e0e8f8;font-family:'JetBrains Mono',monospace;min
 
 <script>
 var APIKEY = 'FCTV_LIVE_KEY';
+var marketCtx = '';
+
+// Fetch real market data from VPS
+async function loadMarketData() {
+  try {
+    var r = await fetch('http://137.220.56.135:3000/api/market-data');
+    var d = await r.json();
+    marketCtx = 'LIVE MARKET DATA: ' +
+      'NQ ' + d.NQ.close + ' (' + d.NQ.bias + ' ' + d.NQ.changePct + '%), ' +
+      'ES ' + d.ES.close + ' (' + d.ES.bias + ' ' + d.ES.changePct + '%), ' +
+      'YM ' + d.YM.close + ' (' + d.YM.bias + '), ' +
+      'CL ' + d.CL.close + ' (' + d.CL.bias + '), ' +
+      'GC ' + d.GC.close + ' (' + d.GC.bias + '), ' +
+      'VIX ' + d.VIX.close + '. ' +
+      'ATR NQ ' + d.NQ.atr + ' pts. ' +
+      'Data as of: ' + d.NQ.updated;
+    console.log('Market context loaded:', marketCtx);
+  } catch(e) {
+    console.log('Market data unavailable:', e.message);
+    marketCtx = '';
+  }
+}
+loadMarketData();
 var ac = null;
 
 var T = {
@@ -161,7 +184,7 @@ var T = {
 };
 
 var P = {
-  pre:  'You are the FCTV AI analyst for FutureCastTV, a professional futures trading channel. Generate a pre-market intelligence briefing for NQ/MNQ, ES/MES, YM, CL, Gold and Silver futures traders. Use these exact sections:\n\n## OVERNIGHT ACTION\n## SESSION BIAS\n## KEY LEVELS TO WATCH\n## TOP CATALYSTS TODAY\n## NQ TRADE SETUP\n\nBe concise, professional, use futures trader language. Under 400 words. End with a one-line disclaimer.',
+  pre:  'REAL_PRICE_CONTEXT You are the FCTV AI analyst for FutureCastTV, a professional futures trading channel. Generate a pre-market intelligence briefing using the live price data above. Use these exact sections:\n\n## OVERNIGHT ACTION\n## SESSION BIAS\n## KEY LEVELS TO WATCH\n## TOP CATALYSTS TODAY\n## NQ TRADE SETUP\n\nReference the actual prices provided. Be concise, professional, use futures trader language. Under 400 words.',
   open: 'You are the FCTV AI analyst. Generate an open reaction intelligence briefing for NQ ES CL Gold futures traders. Sections:\n\n## OPEN SUMMARY\n## BIAS UPDATE\n## KEY LEVELS IN PLAY\n## MORNING SESSION SETUP\n\nUnder 300 words.',
   mid:  'You are the FCTV AI analyst. Generate a mid-morning intelligence pulse for NQ ES CL Gold futures traders. Sections:\n\n## MORNING RECAP\n## CURRENT BIAS\n## AFTERNOON SETUP\n## KEY LEVELS\n\nUnder 300 words.',
   aft:  'You are the FCTV AI analyst. Generate an afternoon intelligence briefing for NQ ES CL Gold futures traders. Sections:\n\n## AFTERNOON BIAS\n## POWER HOUR SETUP\n## KEY LEVELS\n## OVERNIGHT POSITION NOTES\n\nUnder 300 words.'
@@ -187,7 +210,7 @@ async function run(s, id) {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 800,
-        messages: [{ role: 'user', content: P[s] }]
+        messages: [{ role: 'user', content: P[s].replace('REAL_PRICE_CONTEXT', marketCtx ? marketCtx + '\n\n' : '') }]
       })
     });
     var d = await r.json();
