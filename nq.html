@@ -64,14 +64,14 @@
 
   /* ── HEADER ── */
   .hdr {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--border-hi);
+    position: relative;
   }
   .hdr-left { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-  #centerBtns { justify-self: center; }
   .logo {
     font-family: 'Orbitron', sans-serif;
     font-size: 15px; font-weight: 700;
@@ -850,7 +850,7 @@
       <span class="ticker-lbl" id="tickerLbl">NQ / MNQ</span>
       <span class="price-display" id="priceDisplay">—</span>
       <span class="chg-badge chg-up" id="chgBadge">+0.00%</span>
-      <div id="centerBtns" style="display:flex;gap:8px;align-items:center;">
+      <div id="centerBtns" style="display:flex;gap:8px;align-items:center;position:absolute;left:50%;transform:translateX(-50%);">
         <a href="http://137.220.56.135:3000/briefing.html" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#000;padding:6px 14px;background:#00ff94;border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">⬡ BRIEFING</a>
         <a href="subscribe.html" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#00d4ff;padding:6px 14px;border:2px solid rgba(0,212,255,0.5);border-radius:4px;text-decoration:none;letter-spacing:0.08em;white-space:nowrap;">SUBSCRIBE ✦</a>
         <button onclick="POTUSAlert.test(1)" style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#ff3b5c;padding:6px 14px;border:2px solid rgba(255,59,92,0.5);border-radius:4px;background:rgba(255,59,92,0.08);cursor:pointer;letter-spacing:0.08em;white-space:nowrap;">🇺🇸 POTUS · PRO</button>
@@ -1383,165 +1383,7 @@ function computeBias() {
 }
 
 // ── CHART BUILDER ──────────────────────────────────────────────
-function buildChart(fc) {
-  const ctx = document.getElementById('forecastChart').getContext('2d');
-  if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
-  window._chartLevels = buildLevels(base, atr);
-  window._chartPrice = base;
 
-  const yMin = Math.min(...fc.lo2) - (Math.max(...fc.hi2) - Math.min(...fc.lo2)) * 0.08;
-  const yMax = Math.max(...fc.hi2) + (Math.max(...fc.hi2) - Math.min(...fc.lo2)) * 0.08;
-  // Simple level line drawer - runs after each chart render
-  const _lvPlugin = {
-    id:'lvLines',
-    afterDraw(ch){
-      if(!window._chartLevels) return;
-      const c=ch.ctx, ya=ch.scales.y, xa=ch.scales.x;
-      const L=xa.left, R=xa.right;
-      // Only extend 30% of chart width from left
-      const lineEnd = L + (R-L)*0.30;
-      const px=window._chartLevels[0]?window._chartLevels[0].val:0;
-      const atr=SYMBOLS[currentSymbol].atr;
-      const dec=SYMBOLS[currentSymbol].decimals||2;
-      c.save();
-      window._chartLevels.forEach(function(lv){
-        if(lv.val < ch.scales.y.min || lv.val > ch.scales.y.max) return;
-        const y=ya.getPixelForValue(lv.val);
-        const near=Math.abs(lv.val-window._chartPrice)<atr*0.35;
-        const col=lv.cls==='lv-res'?'#ff3b5c':lv.cls==='lv-sup'?'#00ff94':lv.cls==='lv-poc'?'#00d4ff':'#ffb800';
-        // Line
-        c.beginPath();
-        c.strokeStyle=col;
-        c.globalAlpha=near?0.85:0.35;
-        c.lineWidth=near?1.5:1;
-        c.setLineDash(near?[]:[3,3]);
-        c.moveTo(L,y);
-        c.lineTo(lineEnd,y);
-        c.stroke();
-        // Label — just the tag name, right at end of line
-        c.setLineDash([]);
-        c.globalAlpha=near?1:0.5;
-        c.font=(near?'bold ':'')+'11px JetBrains Mono,monospace';
-        c.fillStyle=col;
-        c.textAlign='left';
-        const val=lv.val.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
-        c.fillText(lv.tag+' '+val, lineEnd+4, y+4);
-        c.globalAlpha=1;
-      });
-      c.restore();
-    }
-  };
-
-  chartInstance = new Chart(ctx, {
-    plugins:[_lvPlugin],
-    type: 'line',
-    data: {
-      labels: fc.labels,
-      datasets: [
-        {
-          label: '95% lo',
-          data: fc.lo2, fill: false,
-          borderColor: 'transparent', pointRadius: 0, tension: 0.45
-        },
-        {
-          label: 'Bull Zone',
-          data: fc.bull,
-          fill: '-1',
-          backgroundColor: 'rgba(0,255,148,0.07)',
-          borderColor: 'rgba(0,255,148,0.4)',
-          borderWidth: 1.5,
-          borderDash: [5,4],
-          pointRadius: 0, tension: 0.45
-        },
-        {
-          label: 'Inner hi',
-          data: fc.hi1, fill: false,
-          borderColor: 'transparent', pointRadius: 0, tension: 0.45
-        },
-        {
-          label: '68% Band',
-          data: fc.lo1,
-          fill: '-1',
-          backgroundColor: 'rgba(0,212,255,0.10)',
-          borderColor: 'transparent',
-          pointRadius: 0, tension: 0.45
-        },
-        {
-          label: 'Base Case',
-          data: fc.base_c,
-          fill: false,
-          borderColor: '#00d4ff',
-          borderWidth: 2.5,
-          pointRadius: [7, 3, 3, 3, 3, 3, 3, 3, 3],
-          pointBackgroundColor: '#00d4ff',
-          pointBorderColor: '#060810',
-          pointBorderWidth: 1.5,
-          tension: 0.45
-        },
-        {
-          label: 'Bear Zone',
-          data: fc.bear,
-          fill: 1,
-          backgroundColor: 'rgba(255,59,92,0.07)',
-          borderColor: 'rgba(255,59,92,0.4)',
-          borderWidth: 1.5,
-          borderDash: [5,4],
-          pointRadius: 0, tension: 0.45
-        },
-        {
-          label: '95% hi',
-          data: fc.hi2, fill: false,
-          borderColor: 'transparent', pointRadius: 0, tension: 0.45
-        },
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { mode: 'index', intersect: false },
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#0d1e38',
-          borderColor: 'rgba(0,212,255,0.75)',
-          borderWidth: 1,
-          titleColor: '#00d4ff',
-          bodyColor: '#c8d8f0',
-          titleFont: { family: 'JetBrains Mono', size: 11 },
-          bodyFont: { family: 'JetBrains Mono', size: 11 },
-          callbacks: {
-            label: ctx => {
-              if (['95% lo','Inner hi','95% hi'].includes(ctx.dataset.label)) return null;
-              const dec = SYMBOLS[currentSymbol].decimals || 2;
-              return ' ' + ctx.dataset.label + ': ' + ctx.raw.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
-            }
-          }
-        }
-      },
-      scales: {
-        x: {
-          grid: { color: 'rgba(0,212,255,0.06)', lineWidth: 1 },
-          ticks: { color: 'rgba(0,212,255,1.0)', font: { family:'JetBrains Mono', size:10 }, maxRotation: 0 }
-        },
-        y: {
-          position: 'right',
-          min: yMin, max: yMax,
-          grid: { color: 'rgba(0,212,255,0.06)', lineWidth: 1 },
-          ticks: {
-            color: 'rgba(0,212,255,1.0)',
-            font: { family:'JetBrains Mono', size:10 },
-            callback: v => {
-              const dec = SYMBOLS[currentSymbol].decimals || 2;
-              return v.toLocaleString('en-US',{minimumFractionDigits:dec,maximumFractionDigits:dec});
-            }
-          }
-        }
-      }
-    }
-  });
-}
-
-// ── MAIN RENDER ────────────────────────────────────────────────
 function render(sym) {
   const cfg = SYMBOLS[sym];
   const dec = cfg.decimals || 2;
