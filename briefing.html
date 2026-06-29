@@ -3,44 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FUTURECASTTV — Morning Briefing</title>
+<title>FUTURECASTTV — Futures Morning Briefing</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:#060810;color:#e0e8f8;font-family:'JetBrains Mono',monospace;min-height:100vh;}
 .nav{background:#0a1628;border-bottom:1px solid rgba(0,212,255,0.3);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;color:#00d4ff;letter-spacing:0.2em;}
-.nav-links{display:flex;gap:8px;}
-.nav-link{color:rgba(220,230,248,0.7);font-size:9px;letter-spacing:0.12em;padding:4px 10px;border:1px solid rgba(0,212,255,0.2);border-radius:3px;text-decoration:none;}
-.nav-link:hover{color:#00d4ff;border-color:rgba(0,212,255,0.6);}
-.nav-link.active{color:#00d4ff;border-color:#00d4ff;background:rgba(0,212,255,0.08);}
+.nav-links{display:flex;gap:6px;}
+.nav-link{color:rgba(220,230,248,0.7);font-size:9px;letter-spacing:0.1em;padding:4px 8px;border:1px solid rgba(0,212,255,0.2);border-radius:3px;text-decoration:none;}
+.nav-link:hover,.nav-link.active{color:#00d4ff;border-color:#00d4ff;}
+
+/* HEADER */
 .header{padding:20px;text-align:center;border-bottom:1px solid rgba(0,212,255,0.15);}
-.header-title{font-family:'Orbitron',sans-serif;font-size:13px;letter-spacing:0.3em;color:#00d4ff;margin-bottom:4px;}
-.header-sub{font-size:10px;color:rgba(220,230,248,0.6);letter-spacing:0.1em;}
-.sessions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px;}
-.session-card{background:#0a1628;border:1px solid rgba(0,212,255,0.2);border-radius:6px;padding:12px;cursor:pointer;transition:all 0.2s;text-align:center;}
-.session-card:hover{border-color:rgba(0,212,255,0.6);background:#0d1f3a;}
-.session-card.active{border-color:#00d4ff;background:rgba(0,212,255,0.08);}
-.session-time{font-size:9px;color:#00ff94;letter-spacing:0.1em;margin-bottom:4px;}
-.session-name{font-size:11px;color:#e0e8f8;font-weight:600;letter-spacing:0.1em;margin-bottom:4px;}
-.session-desc{font-size:8px;color:rgba(220,230,248,0.5);}
-.session-badge{display:inline-block;font-size:7px;padding:2px 6px;border-radius:10px;margin-top:4px;font-weight:700;letter-spacing:0.1em;}
-.badge-free{background:rgba(0,255,148,0.15);color:#00ff94;border:1px solid rgba(0,255,148,0.3);}
-.badge-pro{background:rgba(0,212,255,0.15);color:#00d4ff;border:1px solid rgba(0,212,255,0.3);}
+.header-title{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;letter-spacing:0.2em;color:#fff;margin-bottom:6px;}
+.header-sub{font-size:11px;color:rgba(220,230,248,0.55);letter-spacing:0.12em;margin-bottom:12px;}
+.clock-wrap{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:700;color:#00d4ff;letter-spacing:0.15em;margin-bottom:4px;}
+.clock-label{font-size:9px;color:rgba(0,212,255,0.5);letter-spacing:0.2em;}
+
+/* DISCLAIMER */
+.disclaimer{background:rgba(255,59,92,0.06);border:1px solid rgba(255,59,92,0.25);border-radius:6px;padding:10px 16px;margin:12px 20px;text-align:center;}
+.disclaimer-text{font-size:11px;color:rgba(255,150,150,0.85);letter-spacing:0.08em;line-height:1.6;}
+
+/* SESSIONS */
+.sessions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px;}
+.card{background:#0a1628;border:1px solid rgba(0,212,255,0.2);border-radius:8px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s;position:relative;}
+.card:hover{border-color:rgba(0,212,255,0.6);background:#0d1f3a;}
+.card.active{border-color:#00d4ff;background:rgba(0,212,255,0.08);}
+.card-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:700;padding:3px 10px;border-radius:10px;white-space:nowrap;}
+.badge-free{background:#00ff94;color:#000;}
+.badge-pro{background:#00d4ff;color:#000;}
+.card-time{font-size:11px;color:#00ff94;margin-bottom:6px;margin-top:4px;}
+.card-name{font-size:14px;color:#fff;font-weight:700;letter-spacing:0.1em;margin-bottom:6px;}
+.card-desc{font-size:10px;color:rgba(220,230,248,0.55);line-height:1.5;}
+.card-pro-note{font-size:9px;color:rgba(0,212,255,0.6);margin-top:6px;font-style:italic;}
+
+/* BRIEFING PANEL */
 .briefing-wrap{padding:0 16px 16px;}
-.briefing-panel{background:#0a1628;border:1px solid rgba(0,212,255,0.25);border-radius:6px;padding:16px;min-height:300px;}
-.briefing-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(0,212,255,0.15);}
-.briefing-title{font-size:10px;letter-spacing:0.2em;color:#00d4ff;}
-.briefing-time{font-size:9px;color:rgba(220,230,248,0.5);}
-.briefing-content{font-size:12px;line-height:1.8;color:#e0e8f8;white-space:pre-wrap;}
-.briefing-content h1,.briefing-content h2,.briefing-content h3{color:#00d4ff;font-size:11px;letter-spacing:0.15em;margin:12px 0 6px;font-family:'JetBrains Mono',monospace;}
-.loading{text-align:center;padding:40px;color:rgba(0,212,255,0.6);font-size:11px;letter-spacing:0.2em;}
-.loading::after{content:'';animation:dots 1.5s infinite;}
-@keyframes dots{0%{content:''}33%{content:'.'}66%{content:'..'}100%{content:'...'}}
-.idle{text-align:center;padding:40px;}
-.idle-icon{font-size:32px;margin-bottom:12px;color:rgba(0,212,255,0.3);}
-.idle-text{font-size:11px;color:rgba(220,230,248,0.5);letter-spacing:0.1em;}
-.footer{text-align:center;padding:12px;font-size:8px;color:rgba(220,230,248,0.3);letter-spacing:0.1em;border-top:1px solid rgba(0,212,255,0.1);}
+.panel{background:#0a1628;border:1px solid rgba(0,212,255,0.25);border-radius:8px;padding:20px;min-height:400px;}
+.panel-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(0,212,255,0.15);}
+.panel-title{font-size:12px;letter-spacing:0.2em;color:#00d4ff;font-weight:700;}
+.panel-time{font-size:10px;color:rgba(220,230,248,0.45);}
+.panel-content{font-size:15px;line-height:2.0;color:#e8f0fc;}
+.panel-content h2{color:#00d4ff;font-size:12px;letter-spacing:0.18em;margin:16px 0 8px;font-family:'JetBrains Mono',monospace;}
+.panel-content strong{color:#00ff94;}
+.idle{text-align:center;padding:60px 20px;}
+.idle-icon{font-size:40px;margin-bottom:16px;color:rgba(0,212,255,0.3);}
+.idle-text{font-size:14px;color:rgba(220,230,248,0.45);letter-spacing:0.12em;line-height:1.8;}
+.loading{text-align:center;padding:60px;font-size:13px;color:rgba(0,212,255,0.6);letter-spacing:0.2em;}
+
+/* FOOTER */
+.footer{background:#0a1628;border-top:1px solid rgba(0,212,255,0.15);padding:16px 20px;}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.footer-text{font-size:9px;color:rgba(220,230,248,0.3);letter-spacing:0.08em;}
+.footer-sub{background:#00ff94;color:#000;font-size:11px;font-weight:700;padding:8px 20px;border-radius:4px;text-decoration:none;letter-spacing:0.1em;}
 </style>
 </head>
 <body>
@@ -48,7 +64,7 @@ body{background:#060810;color:#e0e8f8;font-family:'JetBrains Mono',monospace;min
 <div class="nav">
   <div class="nav-logo">FUTURECASTTV</div>
   <div class="nav-links">
-    <a href="index.html" class="nav-link">⬡ HUB</a>
+    <a href="index.html" class="nav-link">HUB</a>
     <a href="nq.html" class="nav-link">NQ/MNQ</a>
     <a href="es.html" class="nav-link">ES/MES</a>
     <a href="ym.html" class="nav-link">YM/MYM</a>
@@ -60,111 +76,142 @@ body{background:#060810;color:#e0e8f8;font-family:'JetBrains Mono',monospace;min
 </div>
 
 <div class="header">
-  <div class="header-title">⬡ AI MORNING BRIEFING</div>
-  <div class="header-sub">Powered by Claude · NQ · ES · YM · CL · Gold · Silver</div>
+  <div class="header-title">FUTURES MORNING INTELLIGENCE</div>
+  <div class="header-sub">NQ · ES · YM · CL · GOLD · SILVER · Powered by Claude AI</div>
+  <div class="clock-wrap" id="clock">--:--:-- --</div>
+  <div class="clock-label">CENTRAL TIME</div>
+</div>
+
+<div class="disclaimer">
+  <div class="disclaimer-text">
+    ⚠️ NOT FINANCIAL ADVICE · NOT TRADING ADVICE · FOR EDUCATIONAL AND ENTERTAINMENT PURPOSES ONLY<br>
+    All content generated by AI. Always consult a licensed financial professional before making any trading decisions.
+  </div>
 </div>
 
 <div class="sessions">
-  <div class="session-card" onclick="loadBriefing('premarket',this)">
-    <div class="session-time">7:00 AM CT</div>
-    <div class="session-name">PRE-MARKET</div>
-    <div class="session-desc">Overnight action · Key levels · Session bias</div>
-    <span class="session-badge badge-free">FREE</span>
+  <div class="card" id="s1" onclick="run('pre','s1')">
+    <span class="card-badge badge-free">FREE DAILY</span>
+    <div class="card-time">7:00 AM CT</div>
+    <div class="card-name">PRE-MARKET INTEL</div>
+    <div class="card-desc">Overnight action · Session bias · Key levels to watch · NQ setup</div>
   </div>
-  <div class="session-card" onclick="loadBriefing('open',this)">
-    <div class="session-time">9:45 AM CT</div>
-    <div class="session-name">OPEN REACTION</div>
-    <div class="session-desc">Open play · Bias shift · Morning setup</div>
-    <span class="session-badge badge-pro">PRO</span>
+  <div class="card" id="s2" onclick="run('open','s2')">
+    <span class="card-badge badge-pro">PRO</span>
+    <div class="card-time">9:45 AM CT</div>
+    <div class="card-name">OPEN REACTION INTEL</div>
+    <div class="card-desc">Open play · Bias shift · Key levels in play · Morning setup</div>
+    <div class="card-pro-note">⚡ Auto-fires for Pro subscribers</div>
   </div>
-  <div class="session-card" onclick="loadBriefing('midday',this)">
-    <div class="session-time">11:00 AM CT</div>
-    <div class="session-name">MID-MORNING</div>
-    <div class="session-desc">Morning recap · Afternoon bias · Key levels</div>
-    <span class="session-badge badge-pro">PRO</span>
+  <div class="card" id="s3" onclick="run('mid','s3')">
+    <span class="card-badge badge-pro">PRO</span>
+    <div class="card-time">11:00 AM CT</div>
+    <div class="card-name">MID-MORNING INTEL</div>
+    <div class="card-desc">Morning recap · Afternoon bias · Position notes</div>
+    <div class="card-pro-note">⚡ Auto-fires for Pro subscribers</div>
   </div>
-  <div class="session-card" onclick="loadBriefing('afternoon',this)">
-    <div class="session-time">1:00 PM CT</div>
-    <div class="session-name">AFTERNOON</div>
-    <div class="session-desc">Power hour setup · Overnight position</div>
-    <span class="session-badge badge-pro">PRO</span>
+  <div class="card" id="s4" onclick="run('aft','s4')">
+    <span class="card-badge badge-pro">PRO</span>
+    <div class="card-time">1:00 PM CT</div>
+    <div class="card-name">AFTERNOON INTEL</div>
+    <div class="card-desc">Power hour setup · Key levels · Overnight position notes</div>
+    <div class="card-pro-note">⚡ Auto-fires for Pro subscribers</div>
   </div>
 </div>
 
 <div class="briefing-wrap">
-  <div class="briefing-panel">
-    <div class="briefing-hdr">
-      <div class="briefing-title" id="briefingTitle">⬡ SELECT A SESSION</div>
-      <div class="briefing-time" id="briefingTime"></div>
+  <div class="panel">
+    <div class="panel-hdr">
+      <div class="panel-title" id="ptitle">⬡ SELECT A SESSION ABOVE</div>
+      <div class="panel-time" id="ptime"></div>
     </div>
-    <div id="briefingContent">
+    <div id="pout">
       <div class="idle">
         <div class="idle-icon">⬡</div>
-        <div class="idle-text">SELECT A SESSION ABOVE TO GENERATE YOUR AI BRIEFING</div>
+        <div class="idle-text">
+          SELECT A SESSION ABOVE TO GENERATE<br>
+          YOUR AI FUTURES INTELLIGENCE BRIEFING<br><br>
+          <span style="color:rgba(0,255,148,0.6);font-size:12px;">PRE-MARKET INTEL is FREE every day at 7AM CT</span><br>
+          <span style="color:rgba(0,212,255,0.5);font-size:11px;">Pro subscribers receive all 4 sessions automatically</span>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="footer">FUTURECASTTV · @FutureCastLive · Focus Faster. Trade Smarter. Stay Green 🟢 · FOR EDUCATIONAL USE ONLY · NOT FINANCIAL ADVICE</div>
+<div class="footer">
+  <div class="footer-inner">
+    <div class="footer-text">
+      FUTURECASTTV · @FutureCastLive · Stay Green 🟢<br>
+      NOT FINANCIAL ADVICE · NOT TRADING ADVICE · FOR EDUCATIONAL & ENTERTAINMENT USE ONLY
+    </div>
+    <a href="subscribe.html" class="footer-sub">⚡ SUBSCRIBE — CHARTER DEAL →</a>
+  </div>
+</div>
 
 <script>
-var KEY = 'FCTV_LIVE_KEY';
+var APIKEY = 'FCTV_LIVE_KEY';
+var ac = null;
 
-var PROMPTS = {
-  premarket: 'You are the FCTV AI briefing analyst for FutureCastTV, a professional futures trading channel. Generate a pre-market briefing for NQ/MNQ, ES/MES, YM, CL, Gold and Silver futures traders. Structure your response with these sections:\n\n## OVERNIGHT ACTION\n## SESSION BIAS\n## KEY LEVELS TO WATCH\n## TOP CATALYSTS TODAY\n## NQ TRADE IDEA\n\nBe concise, professional, use futures trader language. Keep under 400 words.',
-  open: 'You are the FCTV AI briefing analyst. Generate an open reaction briefing for NQ ES CL Gold futures traders. Structure:\n\n## OPEN SUMMARY\n## BIAS UPDATE\n## KEY LEVELS NOW IN PLAY\n## MORNING SESSION SETUP\n\nBe concise and professional. Under 300 words.',
-  midday: 'You are the FCTV AI briefing analyst. Generate a mid-morning pulse update for NQ ES CL Gold futures traders. Structure:\n\n## MORNING RECAP\n## CURRENT POSITIONING\n## AFTERNOON BIAS\n## LEVELS TO WATCH\n\nBe concise and professional. Under 300 words.',
-  afternoon: 'You are the FCTV AI briefing analyst. Generate an afternoon setup briefing for NQ ES CL Gold futures traders. Structure:\n\n## AFTERNOON BIAS\n## POWER HOUR SETUP\n## KEY LEVELS\n## OVERNIGHT POSITION NOTES\n\nBe concise and professional. Under 300 words.'
+var T = {
+  pre:  '⬡ PRE-MARKET INTEL — 7:00 AM CT',
+  open: '⬡ OPEN REACTION INTEL — 9:45 AM CT',
+  mid:  '⬡ MID-MORNING INTEL — 11:00 AM CT',
+  aft:  '⬡ AFTERNOON INTEL — 1:00 PM CT'
 };
 
-var TITLES = {
-  premarket: '⬡ PRE-MARKET BRIEF — 7:00 AM CT',
-  open: '⬡ OPEN REACTION — 9:45 AM CT',
-  midday: '⬡ MID-MORNING PULSE — 11:00 AM CT',
-  afternoon: '⬡ AFTERNOON SETUP — 1:00 PM CT'
+var P = {
+  pre:  'You are the FCTV AI analyst for FutureCastTV, a professional futures trading channel. Generate a pre-market intelligence briefing for NQ/MNQ, ES/MES, YM, CL, Gold and Silver futures traders. Use these exact sections:\n\n## OVERNIGHT ACTION\n## SESSION BIAS\n## KEY LEVELS TO WATCH\n## TOP CATALYSTS TODAY\n## NQ TRADE SETUP\n\nBe concise, professional, use futures trader language. Under 400 words. End with a one-line disclaimer.',
+  open: 'You are the FCTV AI analyst. Generate an open reaction intelligence briefing for NQ ES CL Gold futures traders. Sections:\n\n## OPEN SUMMARY\n## BIAS UPDATE\n## KEY LEVELS IN PLAY\n## MORNING SESSION SETUP\n\nUnder 300 words.',
+  mid:  'You are the FCTV AI analyst. Generate a mid-morning intelligence pulse for NQ ES CL Gold futures traders. Sections:\n\n## MORNING RECAP\n## CURRENT BIAS\n## AFTERNOON SETUP\n## KEY LEVELS\n\nUnder 300 words.',
+  aft:  'You are the FCTV AI analyst. Generate an afternoon intelligence briefing for NQ ES CL Gold futures traders. Sections:\n\n## AFTERNOON BIAS\n## POWER HOUR SETUP\n## KEY LEVELS\n## OVERNIGHT POSITION NOTES\n\nUnder 300 words.'
 };
 
-var activeCard = null;
-
-async function loadBriefing(session, card) {
-  if (activeCard) activeCard.classList.remove('active');
-  card.classList.add('active');
-  activeCard = card;
-
-  document.getElementById('briefingTitle').textContent = TITLES[session];
-  document.getElementById('briefingTime').textContent = new Date().toLocaleTimeString('en-US',{timeZone:'America/Chicago',hour:'2-digit',minute:'2-digit'}) + ' CT';
-  document.getElementById('briefingContent').innerHTML = '<div class="loading">GENERATING BRIEFING</div>';
+async function run(s, id) {
+  if (ac) document.getElementById(ac).classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  ac = id;
+  document.getElementById('ptitle').textContent = T[s];
+  document.getElementById('ptime').textContent = new Date().toLocaleTimeString('en-US',{timeZone:'America/Chicago',hour:'2-digit',minute:'2-digit'}) + ' CT';
+  document.getElementById('pout').innerHTML = '<div class="loading">⬡ GENERATING INTELLIGENCE BRIEFING...</div>';
 
   try {
     var r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': KEY,
+        'x-api-key': APIKEY,
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 800,
-        messages: [{ role: 'user', content: PROMPTS[session] }]
+        messages: [{ role: 'user', content: P[s] }]
       })
     });
     var d = await r.json();
     var text = d.content ? d.content[0].text : 'Error generating briefing.';
-    
-    // Format markdown
     text = text
       .replace(/## (.*)/g, '<h2>## $1</h2>')
-      .replace(/\*\*(.*?)\*\*/g, '<strong style="color:#00ff94">$1</strong>')
-      .replace(/^- /gm, '  · ');
-    
-    document.getElementById('briefingContent').innerHTML = '<div class="briefing-content">' + text + '</div>';
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    document.getElementById('pout').innerHTML = '<div class="panel-content">' + text + '</div>';
   } catch(e) {
-    document.getElementById('briefingContent').innerHTML = '<div class="idle"><div class="idle-text">ERROR: ' + e.message + '</div></div>';
+    document.getElementById('pout').innerHTML = '<div class="idle"><div class="idle-text">ERROR: ' + e.message + '</div></div>';
   }
 }
+
+// Clock
+function tick() {
+  var now = new Date();
+  var t = now.toLocaleTimeString('en-US', {
+    timeZone: 'America/Chicago',
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
+  document.getElementById('clock').textContent = t + ' CT';
+}
+tick();
+setInterval(tick, 1000);
 </script>
 </body>
 </html>
