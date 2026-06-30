@@ -235,6 +235,16 @@ function tick() {
 }
 tick();
 setInterval(tick, 1000);
+
+// Auto-load FREE pre-market briefing on page load
+window.addEventListener('load', function() {
+  var freeCard = document.getElementById('s1');
+  if (freeCard) {
+    setTimeout(function() {
+      run('pre', 's1');
+    }, 600);
+  }
+});
 </script>
 </body>
 </html>

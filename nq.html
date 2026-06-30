@@ -105,7 +105,7 @@
     animation: blink 1.8s ease-in-out infinite;
   }
   @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-  .timestamp { font-size: 14px; color: var(--text-dim); letter-spacing: 0.07em; }
+  .timestamp { font-size: 28px; font-weight: 700; color: #00d4ff; letter-spacing: 0.07em; font-family: 'Orbitron', sans-serif; }
   .symbol-selector {
     background: var(--bg2);
     border: 1px solid var(--border-hi);
@@ -1524,7 +1524,7 @@ function closeSub() {
 function tickClock() {
   const now = new Date();
   document.getElementById('timestamp').textContent =
-    now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) + '  CT';
+    now.toLocaleTimeString('en-US',{timeZone:'America/Chicago',hour:'2-digit',minute:'2-digit',second:'2-digit'}) + ' CT';
 }
 
 // ── MAG 10 ENGINE ───────────────────────────────────────────────
